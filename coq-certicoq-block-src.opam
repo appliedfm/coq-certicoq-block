@@ -13,6 +13,7 @@ install: [
 ]
 depends: [
     "coq-vsu"
+    "coq-vsu-int_or_ptr-src"
 ]
 synopsis: "CertiCoq data blocks"
 description: """certicoq-block

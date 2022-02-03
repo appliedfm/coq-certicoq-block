@@ -21,6 +21,7 @@ depends: [
     "coq-vsu"
     "coq-certicoq-block" {= version}
     "coq-certicoq-block-src" {= version}
+    "coq-vsu-int_or_ptr-vst"
 ]
 synopsis: "CertiCoq data blocks"
 description: """certicoq-block
