@@ -4,7 +4,7 @@
 
 ![GitHub](https://img.shields.io/github/license/appliedfm/coq-certicoq-block)
 
-A [Verified Software Unit](https://github.com/appliedfm/coq-vsu) for using aligned pointers as integers.
+A [Verified Software Unit](https://github.com/appliedfm/coq-vsu) for working with CertiCoq data blocks.
 
 Implemented in C, modeled in [Coq](https://coq.inria.fr), and proven correct using the [Verified Software Toolchain](https://vst.cs.princeton.edu/).
 
