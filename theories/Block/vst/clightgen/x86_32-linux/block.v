@@ -75,7 +75,185 @@ Definition ___compcert_va_composite : ident := $"__compcert_va_composite".
 Definition ___compcert_va_float64 : ident := $"__compcert_va_float64".
 Definition ___compcert_va_int32 : ident := $"__compcert_va_int32".
 Definition ___compcert_va_int64 : ident := $"__compcert_va_int64".
+Definition _block : ident := $"block".
+Definition _certicoq_block__get_field : ident := $"certicoq_block__get_field".
+Definition _certicoq_block__get_header : ident := $"certicoq_block__get_header".
+Definition _certicoq_block__get_size : ident := $"certicoq_block__get_size".
+Definition _certicoq_block__get_tag : ident := $"certicoq_block__get_tag".
+Definition _certicoq_block__init : ident := $"certicoq_block__init".
+Definition _certicoq_block__set_field : ident := $"certicoq_block__set_field".
+Definition _certicoq_block__set_header : ident := $"certicoq_block__set_header".
+Definition _certicoq_block__set_size : ident := $"certicoq_block__set_size".
+Definition _certicoq_block__set_tag : ident := $"certicoq_block__set_tag".
+Definition _field : ident := $"field".
+Definition _header : ident := $"header".
+Definition _int_or_ptr__of_int : ident := $"int_or_ptr__of_int".
+Definition _int_or_ptr__to_int : ident := $"int_or_ptr__to_int".
 Definition _main : ident := $"main".
+Definition _ret : ident := $"ret".
+Definition _size : ident := $"size".
+Definition _tag : ident := $"tag".
+Definition _x : ident := $"x".
+Definition _t'1 : ident := 128%positive.
+Definition _t'2 : ident := 129%positive.
+
+Definition f_certicoq_block__init := {|
+  fn_return := (talignas 2%N (tptr (talignas 2%N (tptr tvoid))));
+  fn_callconv := cc_default;
+  fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
+                (_header, tuint) :: nil);
+  fn_vars := nil;
+  fn_temps := ((_ret, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+               nil);
+  fn_body :=
+(Ssequence
+  (Sset _ret
+    (Ebinop Oadd (Etempvar _block (tptr (talignas 2%N (tptr tvoid))))
+      (Econst_int (Int.repr 1) tint) (tptr (talignas 2%N (tptr tvoid)))))
+  (Ssequence
+    (Scall None
+      (Evar _certicoq_block__set_header (Tfunction
+                                          (Tcons
+                                            (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))
+                                            (Tcons tuint Tnil)) tvoid
+                                          cc_default))
+      ((Etempvar _ret (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+       (Etempvar _header tuint) :: nil))
+    (Sreturn (Some (Etempvar _ret (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))))))
+|}.
+
+Definition f_certicoq_block__get_header := {|
+  fn_return := tuint;
+  fn_callconv := cc_default;
+  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+                nil);
+  fn_vars := nil;
+  fn_temps := ((_t'1, tint) :: (_t'2, (talignas 2%N (tptr tvoid))) :: nil);
+  fn_body :=
+(Ssequence
+  (Ssequence
+    (Sset _t'2
+      (Ederef
+        (Ebinop Oadd
+          (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+          (Eunop Oneg (Econst_int (Int.repr 1) tint) tint)
+          (tptr (talignas 2%N (tptr tvoid)))) (talignas 2%N (tptr tvoid))))
+    (Scall (Some _t'1)
+      (Evar _int_or_ptr__to_int (Tfunction
+                                  (Tcons (talignas 2%N (tptr tvoid)) Tnil)
+                                  tint cc_default))
+      ((Etempvar _t'2 (talignas 2%N (tptr tvoid))) :: nil)))
+  (Sreturn (Some (Etempvar _t'1 tint))))
+|}.
+
+Definition f_certicoq_block__set_header := {|
+  fn_return := tvoid;
+  fn_callconv := cc_default;
+  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+                (_header, tuint) :: nil);
+  fn_vars := nil;
+  fn_temps := ((_t'1, (talignas 2%N (tptr tvoid))) :: nil);
+  fn_body :=
+(Ssequence
+  (Scall (Some _t'1)
+    (Evar _int_or_ptr__of_int (Tfunction (Tcons tint Tnil)
+                                (talignas 2%N (tptr tvoid)) cc_default))
+    ((Etempvar _header tuint) :: nil))
+  (Sassign
+    (Ederef
+      (Ebinop Oadd
+        (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+        (Eunop Oneg (Econst_int (Int.repr 1) tint) tint)
+        (tptr (talignas 2%N (tptr tvoid)))) (talignas 2%N (tptr tvoid)))
+    (Etempvar _t'1 (talignas 2%N (tptr tvoid)))))
+|}.
+
+Definition f_certicoq_block__get_size := {|
+  fn_return := tuint;
+  fn_callconv := cc_default;
+  fn_params := ((_header, tuint) :: nil);
+  fn_vars := nil;
+  fn_temps := nil;
+  fn_body :=
+(Sreturn (Some (Ebinop Oshr (Etempvar _header tuint)
+                 (Econst_int (Int.repr 10) tint) tuint)))
+|}.
+
+Definition f_certicoq_block__set_size := {|
+  fn_return := tuint;
+  fn_callconv := cc_default;
+  fn_params := ((_header, tuint) :: (_size, tuint) :: nil);
+  fn_vars := nil;
+  fn_temps := nil;
+  fn_body :=
+(Sreturn (Some (Ebinop Oor
+                 (Ebinop Oand (Etempvar _header tuint)
+                   (Eunop Onotint
+                     (Ebinop Osub
+                       (Ebinop Oshl (Econst_int (Int.repr 1) tint)
+                         (Econst_int (Int.repr 10) tint) tint)
+                       (Econst_int (Int.repr 1) tint) tint) tint) tuint)
+                 (Ebinop Oshl (Etempvar _size tuint)
+                   (Econst_int (Int.repr 10) tint) tuint) tuint)))
+|}.
+
+Definition f_certicoq_block__get_tag := {|
+  fn_return := tuchar;
+  fn_callconv := cc_default;
+  fn_params := ((_header, tuint) :: nil);
+  fn_vars := nil;
+  fn_temps := nil;
+  fn_body :=
+(Sreturn (Some (Ebinop Oand (Etempvar _header tuint)
+                 (Econst_int (Int.repr 255) tint) tuint)))
+|}.
+
+Definition f_certicoq_block__set_tag := {|
+  fn_return := tuint;
+  fn_callconv := cc_default;
+  fn_params := ((_header, tuint) :: (_tag, tuchar) :: nil);
+  fn_vars := nil;
+  fn_temps := nil;
+  fn_body :=
+(Sreturn (Some (Ebinop Oor
+                 (Ebinop Oand (Etempvar _header tuint)
+                   (Eunop Onotint (Econst_int (Int.repr 255) tint) tint)
+                   tuint) (Etempvar _tag tuchar) tuint)))
+|}.
+
+Definition f_certicoq_block__get_field := {|
+  fn_return := (talignas 2%N (tptr tvoid));
+  fn_callconv := cc_default;
+  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+                (_field, tuint) :: nil);
+  fn_vars := nil;
+  fn_temps := ((_t'1, (talignas 2%N (tptr tvoid))) :: nil);
+  fn_body :=
+(Ssequence
+  (Sset _t'1
+    (Ederef
+      (Ebinop Oadd
+        (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+        (Etempvar _field tuint) (tptr (talignas 2%N (tptr tvoid))))
+      (talignas 2%N (tptr tvoid))))
+  (Sreturn (Some (Etempvar _t'1 (talignas 2%N (tptr tvoid))))))
+|}.
+
+Definition f_certicoq_block__set_field := {|
+  fn_return := tvoid;
+  fn_callconv := cc_default;
+  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+                (_field, tuint) :: (_x, (talignas 2%N (tptr tvoid))) :: nil);
+  fn_vars := nil;
+  fn_temps := nil;
+  fn_body :=
+(Sassign
+  (Ederef
+    (Ebinop Oadd
+      (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+      (Etempvar _field tuint) (tptr (talignas 2%N (tptr tvoid))))
+    (talignas 2%N (tptr tvoid))) (Etempvar _x (talignas 2%N (tptr tvoid))))
+|}.
 
 Definition composites : list composite_definition :=
 nil.
@@ -348,10 +526,32 @@ Definition global_definitions : list (ident * globdef fundef type) :=
                      {|cc_vararg:=(Some 1); cc_unproto:=false; cc_structret:=false|}))
      (Tcons tint Tnil) tvoid
      {|cc_vararg:=(Some 1); cc_unproto:=false; cc_structret:=false|})) ::
+ (_int_or_ptr__to_int,
+   Gfun(External (EF_external "int_or_ptr__to_int"
+                   (mksignature (AST.Tint :: nil) AST.Tint cc_default))
+     (Tcons (talignas 2%N (tptr tvoid)) Tnil) tint cc_default)) ::
+ (_int_or_ptr__of_int,
+   Gfun(External (EF_external "int_or_ptr__of_int"
+                   (mksignature (AST.Tint :: nil) AST.Tint cc_default))
+     (Tcons tint Tnil) (talignas 2%N (tptr tvoid)) cc_default)) ::
+ (_certicoq_block__init, Gfun(Internal f_certicoq_block__init)) ::
+ (_certicoq_block__get_header, Gfun(Internal f_certicoq_block__get_header)) ::
+ (_certicoq_block__set_header, Gfun(Internal f_certicoq_block__set_header)) ::
+ (_certicoq_block__get_size, Gfun(Internal f_certicoq_block__get_size)) ::
+ (_certicoq_block__set_size, Gfun(Internal f_certicoq_block__set_size)) ::
+ (_certicoq_block__get_tag, Gfun(Internal f_certicoq_block__get_tag)) ::
+ (_certicoq_block__set_tag, Gfun(Internal f_certicoq_block__set_tag)) ::
+ (_certicoq_block__get_field, Gfun(Internal f_certicoq_block__get_field)) ::
+ (_certicoq_block__set_field, Gfun(Internal f_certicoq_block__set_field)) ::
  nil).
 
 Definition public_idents : list ident :=
-(___builtin_debug :: ___builtin_write32_reversed ::
+(_certicoq_block__set_field :: _certicoq_block__get_field ::
+ _certicoq_block__set_tag :: _certicoq_block__get_tag ::
+ _certicoq_block__set_size :: _certicoq_block__get_size ::
+ _certicoq_block__set_header :: _certicoq_block__get_header ::
+ _certicoq_block__init :: _int_or_ptr__of_int :: _int_or_ptr__to_int ::
+ ___builtin_debug :: ___builtin_write32_reversed ::
  ___builtin_write16_reversed :: ___builtin_read32_reversed ::
  ___builtin_read16_reversed :: ___builtin_fnmsub :: ___builtin_fnmadd ::
  ___builtin_fmsub :: ___builtin_fmadd :: ___builtin_fmin ::
@@ -376,5 +576,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\n8c2e713d997cc5d60934d2e09c98da6fb98b881818982a0ed7c03e9ef8103966  src/c/include/coq-certicoq-block/src/block.c
-1c5ac517789477dcd305e8f3c742900ba00e5399140e7b716c1cf7336aa77544  src/c/include/coq-certicoq-block/block.h\n*)
+(*\nInput hashes (sha256):\n\n91ccc7017380a209a258db28ae8652028c69d068942560fd6a994b182354bae0  src/c/include/coq-certicoq-block/src/block.c
+e5c0a973979bbc6a6a0a02dd1e00ead32828fc38f14eb74ce367be5dbb58986b  src/c/include/coq-certicoq-block/block.h\n*)
