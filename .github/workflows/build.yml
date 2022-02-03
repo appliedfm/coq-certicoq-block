@@ -31,8 +31,8 @@ jobs:
           opam_file: ${{ matrix.opam_file }}
           before_install: |
             startGroup "opam pin"
-              git clone https://github.com/appliedfm/coq-vst-int_or_ptr.git ~/coq-vst-int_or_ptr
-              opam pin -n -y ~/coq-vst-int_or_ptr
+              git clone https://github.com/appliedfm/coq-vsu-int_or_ptr.git ~/coq-vsu-int_or_ptr
+              opam pin -n -y ~/coq-vsu-int_or_ptr
               git clone https://github.com/appliedfm/coq-vsu.git ~/coq-vsu
               opam pin -n -y ~/coq-vsu
               opam pin -n -y .
