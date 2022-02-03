@@ -1,0 +1,29 @@
+opam-version: "2.0"
+name: "certicoq-block"
+version: "1.0"
+maintainer: "appliedfm"
+homepage: "https://github.com/appliedfm/coq-certicoq-block"
+dev-repo: "git+https://github.com/appliedfm/coq-certicoq-block.git"
+bug-reports: "https://github.com/appliedfm/coq-certicoq-block/issues"
+license: "https://github.com/appliedfm/coq-certicoq-block/blob/main/LICENSE"
+authors: ["Tim Carstens" "appliedfm"]
+build: [
+    [make "verydeepclean"]
+    [make "BITSIZE=64" "SRC=opam" "PACKAGE_NAME=coq-certicoq-block-vst" "SUBPROJECT=vst" "J=%{jobs}%"]
+]
+install: [
+    make "BITSIZE=64" "SRC=opam" "PACKAGE_NAME=coq-certicoq-block-vst" "SUBPROJECT=vst" "install-vst"
+]
+depends: [
+    "coq" {>= "8.13.2"}
+    "coq-compcert" {= "3.9"}
+    "coq-vst" {= "2.8"}
+    "coq-vsu"
+    "coq-certicoq-block" {= version}
+    "coq-certicoq-block-src" {= version}
+]
+synopsis: "CertiCoq data blocks"
+description: """certicoq-block
+
+Formally specified functions for working with CertiCoq data blocks, implemented in C and proven in Coq. Powered by VST.
+"""
