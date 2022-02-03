@@ -7,7 +7,6 @@
 
 typedef uintptr_t certicoq_block_header_t;
 typedef uint8_t certicoq_block_tag_t;
-
 typedef int_or_ptr *certicoq_block_t __attribute((aligned(_Alignof(int_or_ptr))));
 
 certicoq_block_t certicoq_block__init(int_or_ptr *block, certicoq_block_header_t header);
