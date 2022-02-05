@@ -24,9 +24,10 @@ Proofs are checked by our [CI infrastructure](https://github.com/appliedfm/coq-c
 ## Packages
 
 * `coq-certicoq-block` - functional model
-* `coq-certicoq-block-src` - C source code
-* `coq-certicoq-block-vst` - VST spec (`x86_64-linux`)
-* `coq-certicoq-block-vst-32` - VST spec (`x86_32-linux`)
+* `coq-vsu-certicoq-block-src` - C source code
+* `coq-vsu-certicoq-block-vst` - VST spec (`x86_64-linux`)
+* `coq-vsu-certicoq-block-vst-32` - VST spec (`x86_32-linux`)
+* `coq-vsu-certicoq-block` - All of the above
 
 
 ## Installing
@@ -61,12 +62,12 @@ $
 We currently publish three Coq libraries:
 
 * `coq-certicoq-block` - functional model
-* `coq-certicoq-block-vst` - VST spec (`x86_64-linux`)
-* `coq-certicoq-block-vst-32` - VST spec (`x86_32-linux`)
+* `coq-vsu-certicoq-block-vst` - VST spec (`x86_64-linux`)
+* `coq-vsu-certicoq-block-vst-32` - VST spec (`x86_32-linux`)
 
 The `coq-certicoq-block` library is target-agnostic and is therefore always installed into a location within Coq's search path.
 
-However, `coq-certicoq-block-vst` and `coq-certicoq-block-vst-32` are both target-specific. As such, they are sometimes installed into locations outside of Coq's search path. Fortunately, these libraries can be found by calling `vsu --show-coq-variant-path=PACKAGE`. For example:
+However, `coq-vsu-certicoq-block-vst` and `coq-vsu-certicoq-block-vst-32` are both target-specific. As such, they are sometimes installed into locations outside of Coq's search path. Fortunately, these libraries can be found by calling `vsu --show-coq-variant-path=PACKAGE`. For example:
 
 ```console
 $ echo `vsu --show-coq-variant-path=coq-certicoq-block-vst-32`

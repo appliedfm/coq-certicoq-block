@@ -8,6 +8,7 @@ theories/Block/vst/ast/ast.v
 -Q theories/Block/vst/clightgen/x86_64-linux    CertiCoq.Block.vst.clightgen
 theories/Block/vst/clightgen/x86_64-linux/block.v
 -Q theories/Block/vst/cmodel                 CertiCoq.Block.vst.cmodel
+theories/Block/vst/cmodel/certicoq_block.v
 theories/Block/vst/cmodel/spatial.v
 -Q theories/Block/vst/spec                   CertiCoq.Block.vst.spec
 theories/Block/vst/spec/spec.v
