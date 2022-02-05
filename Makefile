@@ -33,6 +33,7 @@ TARGET=x86_64-linux
 VARIANT=
 COMPCERT_PACKAGE=coq-compcert
 VST_PACKAGE=coq-vst
+INT_OR_PTR_PACKAGE=coq-vsu-int_or_ptr-vst
 
 
 COQLIB=$(shell $(COQC) -where | tr -d '\r' | tr '\\' '/')
@@ -45,6 +46,7 @@ else ifeq ($(BITSIZE),32)
 	TARGET=x86_32-linux
 	COMPCERT_PACKAGE=coq-compcert-32
 	VST_PACKAGE=coq-vst-32
+	INT_OR_PTR_PACKAGE=coq-vsu-int_or_ptr-vst-32
 	COQLIBINSTALL=$(COQLIB)/../coq-variant
 	VARIANT=32/
 endif
@@ -103,6 +105,7 @@ _CoqProject: $(CLIGHT_TARGETS)
 	echo "# $(TARGET)"                          > $@
 	echo `$(VSUTOOL) -Q $(COMPCERT_PACKAGE)`    >> $@
 	echo `$(VSUTOOL) -Q $(VST_PACKAGE)`         >> $@
+	echo `$(VSUTOOL) -Q $(INT_OR_PTR_PACKAGE)`  >> $@
 	[ -n "$(SKIP_MODEL)" ] || echo "-Q theories/$(PROJECT)/model                      $(PUBLISHER).$(PROJECT).model"          >> $@
 	[ -n "$(SKIP_MODEL)" ] || find     theories/$(PROJECT)/model                     -name "*.v" | sort                       >> $@
 	[ -n "$(SKIP_VST)" ]   || echo "-Q theories/$(PROJECT)/vst/ast                    $(PUBLISHER).$(PROJECT).vst.ast"        >> $@
