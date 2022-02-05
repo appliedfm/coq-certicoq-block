@@ -20,6 +20,7 @@ certicoq_block_header_t certicoq_block__set_size(certicoq_block_header_t header,
 certicoq_block_tag_t certicoq_block__get_tag(certicoq_block_header_t header);
 certicoq_block_header_t certicoq_block__set_tag(certicoq_block_header_t header, certicoq_block_tag_t tag);
 
+int_or_ptr *certicoq_block__get_field_ptr(certicoq_block_t block, size_t field);
 int_or_ptr certicoq_block__get_field(certicoq_block_t block, size_t field);
 void certicoq_block__set_field(certicoq_block_t block, size_t field, int_or_ptr x);
 

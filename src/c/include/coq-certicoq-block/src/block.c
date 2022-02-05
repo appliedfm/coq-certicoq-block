@@ -40,6 +40,11 @@ certicoq_block_header_t certicoq_block__set_tag(certicoq_block_header_t header, 
     return (header & ~0xff) | tag;
 }
 
+int_or_ptr *certicoq_block__get_field_ptr(certicoq_block_t block, size_t field)
+{
+    return &block[field];
+}
+
 int_or_ptr certicoq_block__get_field(certicoq_block_t block, size_t field)
 {
     return block[field];
