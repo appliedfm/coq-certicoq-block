@@ -7,7 +7,7 @@
 
 typedef uintptr_t certicoq_block_header_t;
 typedef uint8_t certicoq_block_tag_t;
-typedef int_or_ptr *certicoq_block_t __attribute((aligned(_Alignof(int_or_ptr))));
+typedef int_or_ptr *certicoq_block_t;
 
 certicoq_block_t certicoq_block__init(int_or_ptr *block, certicoq_block_header_t header);
 
@@ -22,5 +22,8 @@ certicoq_block_header_t certicoq_block__set_tag(certicoq_block_header_t header, 
 
 int_or_ptr certicoq_block__get_field(certicoq_block_t block, size_t field);
 void certicoq_block__set_field(certicoq_block_t block, size_t field, int_or_ptr x);
+
+uintptr_t certicoq_block__get_odata(certicoq_block_t block);
+void certicoq_block__set_odata(certicoq_block_t block, uintptr_t odata);
 
 #endif /* COQ_CERTICOQ_BLOCK__BLOCK_H */

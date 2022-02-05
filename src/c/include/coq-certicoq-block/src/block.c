@@ -50,4 +50,14 @@ void certicoq_block__set_field(certicoq_block_t block, size_t field, int_or_ptr 
     block[field] = x;
 }
 
+uintptr_t certicoq_block__get_odata(certicoq_block_t block)
+{
+    return 0; // TODO
+}
+
+void certicoq_block__set_odata(certicoq_block_t block, uintptr_t odata)
+{
+    // TODO
+}
+
 #endif /* COQ_CERTICOQ_BLOCK__BLOCK_H */

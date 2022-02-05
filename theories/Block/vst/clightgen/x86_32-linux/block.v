@@ -78,11 +78,13 @@ Definition ___compcert_va_int64 : ident := $"__compcert_va_int64".
 Definition _block : ident := $"block".
 Definition _certicoq_block__get_field : ident := $"certicoq_block__get_field".
 Definition _certicoq_block__get_header : ident := $"certicoq_block__get_header".
+Definition _certicoq_block__get_odata : ident := $"certicoq_block__get_odata".
 Definition _certicoq_block__get_size : ident := $"certicoq_block__get_size".
 Definition _certicoq_block__get_tag : ident := $"certicoq_block__get_tag".
 Definition _certicoq_block__init : ident := $"certicoq_block__init".
 Definition _certicoq_block__set_field : ident := $"certicoq_block__set_field".
 Definition _certicoq_block__set_header : ident := $"certicoq_block__set_header".
+Definition _certicoq_block__set_odata : ident := $"certicoq_block__set_odata".
 Definition _certicoq_block__set_size : ident := $"certicoq_block__set_size".
 Definition _certicoq_block__set_tag : ident := $"certicoq_block__set_tag".
 Definition _field : ident := $"field".
@@ -90,6 +92,7 @@ Definition _header : ident := $"header".
 Definition _int_or_ptr__of_int : ident := $"int_or_ptr__of_int".
 Definition _int_or_ptr__to_int : ident := $"int_or_ptr__to_int".
 Definition _main : ident := $"main".
+Definition _odata : ident := $"odata".
 Definition _ret : ident := $"ret".
 Definition _size : ident := $"size".
 Definition _tag : ident := $"tag".
@@ -98,13 +101,12 @@ Definition _t'1 : ident := 128%positive.
 Definition _t'2 : ident := 129%positive.
 
 Definition f_certicoq_block__init := {|
-  fn_return := (talignas 2%N (tptr (talignas 2%N (tptr tvoid))));
+  fn_return := (tptr (talignas 2%N (tptr tvoid)));
   fn_callconv := cc_default;
   fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
                 (_header, tuint) :: nil);
   fn_vars := nil;
-  fn_temps := ((_ret, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
-               nil);
+  fn_temps := ((_ret, (tptr (talignas 2%N (tptr tvoid)))) :: nil);
   fn_body :=
 (Ssequence
   (Sset _ret
@@ -114,19 +116,18 @@ Definition f_certicoq_block__init := {|
     (Scall None
       (Evar _certicoq_block__set_header (Tfunction
                                           (Tcons
-                                            (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))
+                                            (tptr (talignas 2%N (tptr tvoid)))
                                             (Tcons tuint Tnil)) tvoid
                                           cc_default))
-      ((Etempvar _ret (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+      ((Etempvar _ret (tptr (talignas 2%N (tptr tvoid)))) ::
        (Etempvar _header tuint) :: nil))
-    (Sreturn (Some (Etempvar _ret (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))))))
+    (Sreturn (Some (Etempvar _ret (tptr (talignas 2%N (tptr tvoid))))))))
 |}.
 
 Definition f_certicoq_block__get_header := {|
   fn_return := tuint;
   fn_callconv := cc_default;
-  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
-                nil);
+  fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) :: nil);
   fn_vars := nil;
   fn_temps := ((_t'1, tint) :: (_t'2, (talignas 2%N (tptr tvoid))) :: nil);
   fn_body :=
@@ -134,8 +135,7 @@ Definition f_certicoq_block__get_header := {|
   (Ssequence
     (Sset _t'2
       (Ederef
-        (Ebinop Oadd
-          (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+        (Ebinop Oadd (Etempvar _block (tptr (talignas 2%N (tptr tvoid))))
           (Eunop Oneg (Econst_int (Int.repr 1) tint) tint)
           (tptr (talignas 2%N (tptr tvoid)))) (talignas 2%N (tptr tvoid))))
     (Scall (Some _t'1)
@@ -149,7 +149,7 @@ Definition f_certicoq_block__get_header := {|
 Definition f_certicoq_block__set_header := {|
   fn_return := tvoid;
   fn_callconv := cc_default;
-  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+  fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
                 (_header, tuint) :: nil);
   fn_vars := nil;
   fn_temps := ((_t'1, (talignas 2%N (tptr tvoid))) :: nil);
@@ -161,8 +161,7 @@ Definition f_certicoq_block__set_header := {|
     ((Etempvar _header tuint) :: nil))
   (Sassign
     (Ederef
-      (Ebinop Oadd
-        (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+      (Ebinop Oadd (Etempvar _block (tptr (talignas 2%N (tptr tvoid))))
         (Eunop Oneg (Econst_int (Int.repr 1) tint) tint)
         (tptr (talignas 2%N (tptr tvoid)))) (talignas 2%N (tptr tvoid)))
     (Etempvar _t'1 (talignas 2%N (tptr tvoid)))))
@@ -224,7 +223,7 @@ Definition f_certicoq_block__set_tag := {|
 Definition f_certicoq_block__get_field := {|
   fn_return := (talignas 2%N (tptr tvoid));
   fn_callconv := cc_default;
-  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+  fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
                 (_field, tuint) :: nil);
   fn_vars := nil;
   fn_temps := ((_t'1, (talignas 2%N (tptr tvoid))) :: nil);
@@ -232,8 +231,7 @@ Definition f_certicoq_block__get_field := {|
 (Ssequence
   (Sset _t'1
     (Ederef
-      (Ebinop Oadd
-        (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+      (Ebinop Oadd (Etempvar _block (tptr (talignas 2%N (tptr tvoid))))
         (Etempvar _field tuint) (tptr (talignas 2%N (tptr tvoid))))
       (talignas 2%N (tptr tvoid))))
   (Sreturn (Some (Etempvar _t'1 (talignas 2%N (tptr tvoid))))))
@@ -242,17 +240,37 @@ Definition f_certicoq_block__get_field := {|
 Definition f_certicoq_block__set_field := {|
   fn_return := tvoid;
   fn_callconv := cc_default;
-  fn_params := ((_block, (talignas 2%N (tptr (talignas 2%N (tptr tvoid))))) ::
+  fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
                 (_field, tuint) :: (_x, (talignas 2%N (tptr tvoid))) :: nil);
   fn_vars := nil;
   fn_temps := nil;
   fn_body :=
 (Sassign
   (Ederef
-    (Ebinop Oadd
-      (Etempvar _block (talignas 2%N (tptr (talignas 2%N (tptr tvoid)))))
+    (Ebinop Oadd (Etempvar _block (tptr (talignas 2%N (tptr tvoid))))
       (Etempvar _field tuint) (tptr (talignas 2%N (tptr tvoid))))
     (talignas 2%N (tptr tvoid))) (Etempvar _x (talignas 2%N (tptr tvoid))))
+|}.
+
+Definition f_certicoq_block__get_odata := {|
+  fn_return := tuint;
+  fn_callconv := cc_default;
+  fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) :: nil);
+  fn_vars := nil;
+  fn_temps := nil;
+  fn_body :=
+(Sreturn (Some (Econst_int (Int.repr 0) tint)))
+|}.
+
+Definition f_certicoq_block__set_odata := {|
+  fn_return := tvoid;
+  fn_callconv := cc_default;
+  fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
+                (_odata, tuint) :: nil);
+  fn_vars := nil;
+  fn_temps := nil;
+  fn_body :=
+Sskip
 |}.
 
 Definition composites : list composite_definition :=
@@ -543,10 +561,13 @@ Definition global_definitions : list (ident * globdef fundef type) :=
  (_certicoq_block__set_tag, Gfun(Internal f_certicoq_block__set_tag)) ::
  (_certicoq_block__get_field, Gfun(Internal f_certicoq_block__get_field)) ::
  (_certicoq_block__set_field, Gfun(Internal f_certicoq_block__set_field)) ::
+ (_certicoq_block__get_odata, Gfun(Internal f_certicoq_block__get_odata)) ::
+ (_certicoq_block__set_odata, Gfun(Internal f_certicoq_block__set_odata)) ::
  nil).
 
 Definition public_idents : list ident :=
-(_certicoq_block__set_field :: _certicoq_block__get_field ::
+(_certicoq_block__set_odata :: _certicoq_block__get_odata ::
+ _certicoq_block__set_field :: _certicoq_block__get_field ::
  _certicoq_block__set_tag :: _certicoq_block__get_tag ::
  _certicoq_block__set_size :: _certicoq_block__get_size ::
  _certicoq_block__set_header :: _certicoq_block__get_header ::
@@ -576,5 +597,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\n91ccc7017380a209a258db28ae8652028c69d068942560fd6a994b182354bae0  src/c/include/coq-certicoq-block/src/block.c
-1da4dcf71a173e89a74c24ee6d7b4c7f49485ce398d41d6d55f3273d641f7afa  src/c/include/coq-certicoq-block/block.h\n*)
+(*\nInput hashes (sha256):\n\n5bb7aea4e8c0aa4071f3f997257995ab58ac62230e360713020552bf8a4725d2  src/c/include/coq-certicoq-block/src/block.c
+57a9e0fdbfbc0c3cc44cfbd916a6a9327197c818634770039757cfee7ab9a785  src/c/include/coq-certicoq-block/block.h\n*)
