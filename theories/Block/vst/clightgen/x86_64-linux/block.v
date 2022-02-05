@@ -77,16 +77,16 @@ Definition ___compcert_va_int32 : ident := $"__compcert_va_int32".
 Definition ___compcert_va_int64 : ident := $"__compcert_va_int64".
 Definition _block : ident := $"block".
 Definition _certicoq_block__get_field : ident := $"certicoq_block__get_field".
+Definition _certicoq_block__get_field_count : ident := $"certicoq_block__get_field_count".
 Definition _certicoq_block__get_field_ptr : ident := $"certicoq_block__get_field_ptr".
 Definition _certicoq_block__get_header : ident := $"certicoq_block__get_header".
 Definition _certicoq_block__get_odata : ident := $"certicoq_block__get_odata".
-Definition _certicoq_block__get_size : ident := $"certicoq_block__get_size".
 Definition _certicoq_block__get_tag : ident := $"certicoq_block__get_tag".
 Definition _certicoq_block__init : ident := $"certicoq_block__init".
 Definition _certicoq_block__set_field : ident := $"certicoq_block__set_field".
+Definition _certicoq_block__set_field_count : ident := $"certicoq_block__set_field_count".
 Definition _certicoq_block__set_header : ident := $"certicoq_block__set_header".
 Definition _certicoq_block__set_odata : ident := $"certicoq_block__set_odata".
-Definition _certicoq_block__set_size : ident := $"certicoq_block__set_size".
 Definition _certicoq_block__set_tag : ident := $"certicoq_block__set_tag".
 Definition _field : ident := $"field".
 Definition _header : ident := $"header".
@@ -168,7 +168,7 @@ Definition f_certicoq_block__set_header := {|
     (Etempvar _t'1 (talignas 3%N (tptr tvoid)))))
 |}.
 
-Definition f_certicoq_block__get_size := {|
+Definition f_certicoq_block__get_field_count := {|
   fn_return := tulong;
   fn_callconv := cc_default;
   fn_params := ((_header, tulong) :: nil);
@@ -179,7 +179,7 @@ Definition f_certicoq_block__get_size := {|
                  (Econst_int (Int.repr 10) tint) tulong)))
 |}.
 
-Definition f_certicoq_block__set_size := {|
+Definition f_certicoq_block__set_field_count := {|
   fn_return := tulong;
   fn_callconv := cc_default;
   fn_params := ((_header, tulong) :: (_size, tulong) :: nil);
@@ -569,8 +569,8 @@ Definition global_definitions : list (ident * globdef fundef type) :=
  (_certicoq_block__init, Gfun(Internal f_certicoq_block__init)) ::
  (_certicoq_block__get_header, Gfun(Internal f_certicoq_block__get_header)) ::
  (_certicoq_block__set_header, Gfun(Internal f_certicoq_block__set_header)) ::
- (_certicoq_block__get_size, Gfun(Internal f_certicoq_block__get_size)) ::
- (_certicoq_block__set_size, Gfun(Internal f_certicoq_block__set_size)) ::
+ (_certicoq_block__get_field_count, Gfun(Internal f_certicoq_block__get_field_count)) ::
+ (_certicoq_block__set_field_count, Gfun(Internal f_certicoq_block__set_field_count)) ::
  (_certicoq_block__get_tag, Gfun(Internal f_certicoq_block__get_tag)) ::
  (_certicoq_block__set_tag, Gfun(Internal f_certicoq_block__set_tag)) ::
  (_certicoq_block__get_field_ptr, Gfun(Internal f_certicoq_block__get_field_ptr)) ::
@@ -584,8 +584,8 @@ Definition public_idents : list ident :=
 (_certicoq_block__set_odata :: _certicoq_block__get_odata ::
  _certicoq_block__set_field :: _certicoq_block__get_field ::
  _certicoq_block__get_field_ptr :: _certicoq_block__set_tag ::
- _certicoq_block__get_tag :: _certicoq_block__set_size ::
- _certicoq_block__get_size :: _certicoq_block__set_header ::
+ _certicoq_block__get_tag :: _certicoq_block__set_field_count ::
+ _certicoq_block__get_field_count :: _certicoq_block__set_header ::
  _certicoq_block__get_header :: _certicoq_block__init ::
  _int_or_ptr__of_int :: _int_or_ptr__to_int :: ___builtin_debug ::
  ___builtin_write32_reversed :: ___builtin_write16_reversed ::
@@ -612,5 +612,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\nf08447f234abbd6883574fe3feb9092527f239a77cc01754fe9d343e2a5c825d  src/c/include/coq-certicoq-block/src/block.c
-31bc5c50b0fc618686d25caf00c7b159c16035f6b7705a1c1f4141a15015e6d9  src/c/include/coq-certicoq-block/block.h\n*)
+(*\nInput hashes (sha256):\n\n74aef02028a895ac3c0063f43ae82e05396ad4da6c608b963d5fcf922a0a52b2  src/c/include/coq-certicoq-block/src/block.c
+5c376c0025487a12741da291a387d47ee1248681451a24bab2530bc527c3295c  src/c/include/coq-certicoq-block/block.h\n*)

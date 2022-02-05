@@ -20,12 +20,12 @@ void certicoq_block__set_header(certicoq_block_t block, certicoq_block_header_t 
     block[-1] = int_or_ptr__of_int(header);
 }
 
-size_t certicoq_block__get_size(certicoq_block_header_t header)
+size_t certicoq_block__get_field_count(certicoq_block_header_t header)
 {
     return header >> 10;
 }
 
-certicoq_block_header_t certicoq_block__set_size(certicoq_block_header_t header, size_t size)
+certicoq_block_header_t certicoq_block__set_field_count(certicoq_block_header_t header, size_t size)
 {
     return (header & ~((1 << 10) - 1)) | (size << 10);
 }
