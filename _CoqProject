@@ -2,8 +2,6 @@
 
 
 -Q /home/tcarstens/.opam/coq-8.14/lib/coq/user-contrib/appliedfm/int_or_ptr appliedfm.int_or_ptr
--Q theories/Block/model                      CertiCoq.Block.model
-theories/Block/model/block.v
 -Q theories/Block/vst/ast                    CertiCoq.Block.vst.ast
 theories/Block/vst/ast/ast.v
 -Q theories/Block/vst/clightgen/x86_64-linux    CertiCoq.Block.vst.clightgen
