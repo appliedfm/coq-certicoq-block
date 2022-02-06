@@ -23,11 +23,9 @@ Proofs are checked by our [CI infrastructure](https://github.com/appliedfm/coq-c
 
 ## Packages
 
-* `coq-certicoq-block` - functional model
 * `coq-vsu-certicoq-block-src` - C source code
-* `coq-vsu-certicoq-block-vst` - VST spec (`x86_64-linux`)
-* `coq-vsu-certicoq-block-vst-32` - VST spec (`x86_32-linux`)
-* `coq-vsu-certicoq-block` - All of the above
+* `coq-vsu-certicoq-block-vst` - VST model, spec, & proof (`x86_64-linux`)
+* `coq-vsu-certicoq-block-vst-32` - VST model, spec, & proof (`x86_32-linux`)
 
 
 ## Installing
@@ -36,7 +34,7 @@ Installation is performed by `opam` with help by [coq-vsu](https://github.com/ap
 
 ```console
 $ opam pin -n -y .
-$ opam install coq-certicoq-block
+$ opam install coq-vsu-certicoq-block-vst coq-vsu-certicoq-block-vst-32
 ```
 
 
@@ -47,7 +45,7 @@ The C library is installed to the path given by `vsu -I`. For example:
 ```console
 $ tree `vsu -I`
 /home/tcarstens/.opam/coq-8.14/lib/coq-vsu/lib/include
-└── coq-certicoq-block
+└── coq-vsu-certicoq-block
     ├── block.h
     └── src
         └── block.c
@@ -59,18 +57,16 @@ $
 
 ## Using the Coq library
 
-We currently publish three Coq libraries:
+We currently publish two Coq libraries:
 
-* `coq-certicoq-block` - functional model
-* `coq-vsu-certicoq-block-vst` - VST spec (`x86_64-linux`)
-* `coq-vsu-certicoq-block-vst-32` - VST spec (`x86_32-linux`)
+* `coq-vsu-certicoq-block-vst` - VST model, spec, & proof (`x86_64-linux`)
+* `coq-vsu-certicoq-block-vst-32` - VST model, spec, & proof (`x86_32-linux`)
 
-The `coq-certicoq-block` library is target-agnostic and is therefore always installed into a location within Coq's search path.
-
-However, `coq-vsu-certicoq-block-vst` and `coq-vsu-certicoq-block-vst-32` are both target-specific. As such, they are sometimes installed into locations outside of Coq's search path. Fortunately, these libraries can be found by calling `vsu --show-coq-variant-path=PACKAGE`. For example:
+The `coq-vsu-certicoq-block-vst` and `coq-vsu-certicoq-block-vst-32` are both target-specific. As such, they are sometimes installed into locations outside of Coq's search path. Fortunately, these libraries can be found by calling `vsu --show-coq-variant-path=PACKAGE`. For example:
 
 ```console
-$ echo `vsu --show-coq-variant-path=coq-certicoq-block-vst-32`
+$ echo `vsu --show-coq-variant-path=coq-vsu-certicoq-block-vst-32`
+/home/tcarstens/.opam/coq-8.14/lib/coq/../coq-variant/CertiCoq/32/Block
 $
 ```
 
@@ -78,7 +74,7 @@ The `vsu` tool can also be used to supply Coq with the correct arguments for imp
 
 ```
 $ tcarstens@pop-os:~/formal_methods/coq-certicoq-block$ coqtop \
-    `vsu -Q coq-certicoq-block-vst-32` \
+    `vsu -Q coq-vsu-certicoq-block-vst-32` \
     `vsu -Q coq-compcert-32` \
     `vsu -Q coq-vst-32`
 Welcome to Coq 8.14.0

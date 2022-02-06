@@ -68,12 +68,12 @@ endif
 
 
 theories/$(PROJECT)/vst/clightgen/x86_64-linux/block.v: \
-	$(C_INCLUDE_PATH)/coq-certicoq-block/src/block.c \
-	$(C_INCLUDE_PATH)/coq-certicoq-block/block.h
+	$(C_INCLUDE_PATH)/coq-vsu-certicoq-block/src/block.c \
+	$(C_INCLUDE_PATH)/coq-vsu-certicoq-block/block.h
 
 theories/$(PROJECT)/vst/clightgen/x86_32-linux/block.v: \
-	$(C_INCLUDE_PATH)/coq-certicoq-block/src/block.c \
-	$(C_INCLUDE_PATH)/coq-certicoq-block/block.h
+	$(C_INCLUDE_PATH)/coq-vsu-certicoq-block/src/block.c \
+	$(C_INCLUDE_PATH)/coq-vsu-certicoq-block/block.h
 
 theories/$(PROJECT)/vst/clightgen/x86_64-linux/%.v:
 	mkdir -p `dirname $@`
