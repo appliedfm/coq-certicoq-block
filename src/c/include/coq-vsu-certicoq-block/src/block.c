@@ -3,7 +3,7 @@
 
 #include "../block.h"
 
-certicoq_block_t certicoq_block__init(int_or_ptr *dst, certicoq_block_header_t header)
+certicoq_block_t certicoq_block__init(int_or_ptr *dst, certicoq_block_header_t *header)
 {
     certicoq_block_t ret = dst + 1;
     certicoq_block__set_header(ret, header);
@@ -12,7 +12,7 @@ certicoq_block_t certicoq_block__init(int_or_ptr *dst, certicoq_block_header_t h
 
 certicoq_block_t certicoq_block__copy(int_or_ptr *dst, certicoq_block_t src)
 {
-    certicoq_block_header_t hd = certicoq_block__get_header(src);
+    certicoq_block_header_t *hd = certicoq_block__get_header_ptr(src);
     certicoq_block_t ret = certicoq_block__init(dst, hd);
     size_t field_count = certicoq_block__get_field_count(hd);
     size_t i;
@@ -24,34 +24,34 @@ certicoq_block_t certicoq_block__copy(int_or_ptr *dst, certicoq_block_t src)
     return ret;
 }
 
-certicoq_block_header_t certicoq_block__get_header(const certicoq_block_t block)
+certicoq_block_header_t *certicoq_block__get_header_ptr(const certicoq_block_t block)
 {
-    return int_or_ptr__to_int(block[-1]);
+    return (certicoq_block_header_t *)&block[-1];
 }
 
-void certicoq_block__set_header(certicoq_block_t block, certicoq_block_header_t header)
+void certicoq_block__set_header(certicoq_block_t block, certicoq_block_header_t *header)
 {
-    block[-1] = int_or_ptr__of_int(header);
+    block[-1] = int_or_ptr__of_int(*header);
 }
 
-size_t certicoq_block__get_field_count(certicoq_block_header_t header)
+size_t certicoq_block__get_field_count(certicoq_block_header_t *header)
 {
-    return header >> 10;
+    return (*header) >> 10;
 }
 
-certicoq_block_header_t certicoq_block__set_field_count(certicoq_block_header_t header, size_t size)
+void certicoq_block__set_field_count(certicoq_block_header_t *header, size_t size)
 {
-    return (header & ~((1 << 10) - 1)) | (size << 10);
+    *header = ((*header) & ~((1 << 10) - 1)) | (size << 10);
 }
 
-certicoq_block_tag_t certicoq_block__get_tag(certicoq_block_header_t header)
+certicoq_block_tag_t certicoq_block__get_tag(certicoq_block_header_t *header)
 {
-    return header & 0xff;
+    return (*header) & 0xff;
 }
 
-certicoq_block_header_t certicoq_block__set_tag(certicoq_block_header_t header, certicoq_block_tag_t tag)
+certicoq_block_header_t certicoq_block__set_tag(certicoq_block_header_t *header, certicoq_block_tag_t tag)
 {
-    return (header & ~0xff) | tag;
+    return ((*header) & ~0xff) | tag;
 }
 
 int_or_ptr *certicoq_block__get_field_ptr(certicoq_block_t block, size_t field)
