@@ -10,6 +10,11 @@ certicoq_block_t certicoq_block__init(int_or_ptr *dst, certicoq_block_header_t *
     return ret;
 }
 
+certicoq_block_t certicoq_block__of_header(certicoq_block_header_t *header)
+{
+    return header + 1;
+}
+
 certicoq_block_t certicoq_block__copy(int_or_ptr *dst, certicoq_block_t src)
 {
     certicoq_block_header_t *hd = certicoq_block__get_header_ptr(src);
