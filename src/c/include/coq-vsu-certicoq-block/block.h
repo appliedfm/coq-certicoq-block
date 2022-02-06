@@ -16,6 +16,7 @@ certicoq_block_t certicoq_block__copy(int_or_ptr *dst, certicoq_block_t src);
 certicoq_block_header_t *certicoq_block__get_header_ptr(const certicoq_block_t block);
 void certicoq_block__set_header(certicoq_block_t block, certicoq_block_header_t *header);
 
+size_t certicoq_block__get_size(certicoq_block_header_t *header);
 size_t certicoq_block__get_field_count(certicoq_block_header_t *header);
 void certicoq_block__set_field_count(certicoq_block_header_t *header, size_t size);
 

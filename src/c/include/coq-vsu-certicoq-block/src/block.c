@@ -12,7 +12,7 @@ certicoq_block_t certicoq_block__init(int_or_ptr *dst, certicoq_block_header_t *
 
 certicoq_block_t certicoq_block__of_header(certicoq_block_header_t *header)
 {
-    return header + 1;
+    return (certicoq_block_t)header + 1;
 }
 
 certicoq_block_t certicoq_block__copy(int_or_ptr *dst, certicoq_block_t src)
@@ -37,6 +37,11 @@ certicoq_block_header_t *certicoq_block__get_header_ptr(const certicoq_block_t b
 void certicoq_block__set_header(certicoq_block_t block, certicoq_block_header_t *header)
 {
     block[-1] = int_or_ptr__of_int(*header);
+}
+
+size_t certicoq_block__get_size(certicoq_block_header_t *header)
+{
+    return 1 + certicoq_block__get_field_count(header);
 }
 
 size_t certicoq_block__get_field_count(certicoq_block_header_t *header)
