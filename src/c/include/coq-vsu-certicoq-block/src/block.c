@@ -3,10 +3,24 @@
 
 #include "../block.h"
 
-certicoq_block_t certicoq_block__init(int_or_ptr *block, certicoq_block_header_t header)
+certicoq_block_t certicoq_block__init(int_or_ptr *dst, certicoq_block_header_t header)
 {
-    certicoq_block_t ret = block + 1;
+    certicoq_block_t ret = dst + 1;
     certicoq_block__set_header(ret, header);
+    return ret;
+}
+
+certicoq_block_t certicoq_block__copy(int_or_ptr *dst, certicoq_block_t src)
+{
+    certicoq_block_header_t hd = certicoq_block__get_header(src);
+    certicoq_block_t ret = certicoq_block__init(dst, hd);
+    size_t field_count = certicoq_block__get_field_count(hd);
+    size_t i;
+    for (i = 0; i < field_count; i++)
+    {
+        int_or_ptr f = certicoq_block__get_field(src, i);
+        certicoq_block__set_field(ret, i, f);
+    }
     return ret;
 }
 
