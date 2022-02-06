@@ -739,5 +739,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\ncc46c98518a0813d9d85764a9342eb6f9673b1c94a175039c7153b89e61452ab  src/c/include/coq-vsu-certicoq-block/src/block.c
-77440eb1a2ec71171997563d5d3e21a4e0218d290fc24a64383063df4b55d74e  src/c/include/coq-vsu-certicoq-block/block.h\n*)
+(*\nInput hashes (sha256):\n\n29aabd2f353db23e07e52f8d7ef030c6ce67813ad0040ffbe501ba07a7c9f2b7  src/c/include/coq-vsu-certicoq-block/src/block.c
+7d18870b096d1155066b9c478058a71400656ad1912359d3eeb2b6443d1b556b  src/c/include/coq-vsu-certicoq-block/block.h\n*)
