@@ -14,7 +14,7 @@ Proof.
   entailer!.
   unfold block_header_tag_val.
   rewrite block_header_encode__block_header_tag.
-  rewrite Int64.unsigned_repr by apply block_header_tag__Int64_max_unsigned.
+  try rewrite Int64.unsigned_repr by apply block_header_tag__Int64_max_unsigned.
   unfold Int.zero_ext.
   rewrite Int.unsigned_repr by apply block_header_tag__Int_max_unsigned.
   f_equal.

@@ -26,13 +26,11 @@ Proof.
     unfold block_header_size.
     f_equal.
     f_equal.
-    rewrite Int64.unsigned_repr in H.
-    2: {
-      split ; try lia.
-      intro F.
-      inversion F.
-    }
-    rewrite Int64.unsigned_repr in H by apply block_header_field_count__max.
+    first
+      [ rewrite Int64.unsigned_repr in H by rep_lia
+      | rewrite Int.unsigned_repr in H by apply block_header_field_count__max
+      ].
+    try rewrite Int64.unsigned_repr in H by apply block_header_field_count__max.
     lia.
   }
   {
@@ -41,13 +39,11 @@ Proof.
     unfold block_header_size_val.
     cbv [Archi.ptr64].
     unfold block_header_size.
-    rewrite Int64.unsigned_repr in H.
-    2: {
-      split ; try lia.
-      intro F.
-      inversion F.
-    }
-    rewrite Int64.unsigned_repr in H by apply block_header_field_count__max.
+    first
+      [ rewrite Int64.unsigned_repr in H by rep_lia
+      | rewrite Int.unsigned_repr in H by apply block_header_field_count__max
+      ].
+    try rewrite Int64.unsigned_repr in H by apply block_header_field_count__max.
     f_equal.
     f_equal.
     lia.

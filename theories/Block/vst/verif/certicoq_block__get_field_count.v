@@ -15,7 +15,12 @@ Proof.
   unfold block_header_field_count_val.
   cbv [Archi.ptr64].
   rewrite <- block_header_encode__block_header_field_count.
-  unfold Int64.shru.
-  rewrite Int64.unsigned_repr by apply block_header_encode__max_unsigned.
-  now change (Int64.unsigned (Int64.repr 10)) with 10.
+  unfold Int64.shru, Int.shru.
+  first
+    [ rewrite Int64.unsigned_repr by apply block_header_encode__max_unsigned
+    | rewrite Int.unsigned_repr by apply block_header_encode__max_unsigned
+    ].
+  change (Int64.unsigned (Int64.repr 10)) with 10.
+  change (Int.unsigned (Int.repr 10)) with 10.
+  easy.
 Qed.
