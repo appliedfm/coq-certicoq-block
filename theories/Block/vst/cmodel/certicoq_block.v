@@ -29,7 +29,7 @@ Next Obligation.
 Qed.
 
 Lemma block_fields__Zlength (b: Block):
-    0 <= Zlength (block_fields b) < two_p (word_size * 8 - 10).
+    1 <= Zlength (block_fields b) < two_p (word_size * 8 - 10).
 Proof.
     rewrite block_fields__block_header_field_count.
     apply block_header_field_count__range.

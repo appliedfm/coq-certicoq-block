@@ -104,7 +104,7 @@ Definition certicoq_block__field_count_set_spec :=
     h : BlockHeader,
     sh : share,
     p : val,
-    z : {z: Z | 0 <= z < two_p (constants.word_size * 8 - 10)}
+    z : {z: Z | 1 <= z < two_p (constants.word_size * 8 - 10)}
   PRE [ tptr block_header_type, size_type ]
     PROP (writable_share sh)
     PARAMS

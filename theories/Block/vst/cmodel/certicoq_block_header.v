@@ -14,13 +14,13 @@ Record BlockHeader :=
   block_header_field_count: Z;
   block_header_tag: Z;
   block_header_odata: Z;
-  block_header_field_count__range: 0 <= block_header_field_count < two_p (word_size * 8 - 10);
+  block_header_field_count__range: 1 <= block_header_field_count < two_p (word_size * 8 - 10);
   block_header_tag__range: 0 <= block_header_tag < 256;
   block_header_odata__range: 0 <= block_header_odata < 4;
 }.
 
 Definition block_header_field_count_set (h: BlockHeader) (z: Z)
-  (Hz: 0 <= z < two_p (word_size * 8 - 10)):
+  (Hz: 1 <= z < two_p (word_size * 8 - 10)):
   BlockHeader
  := {|
   block_header_field_count := z;
