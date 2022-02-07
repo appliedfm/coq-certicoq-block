@@ -31,4 +31,8 @@ int_or_ptr *certicoq_block__field_get_ptr(certicoq_block_t block, size_t field);
 int_or_ptr certicoq_block__field_get(const certicoq_block_t block, size_t field);
 void certicoq_block__field_set(certicoq_block_t block, size_t field, int_or_ptr x);
 
+void certicoq_block__field_iter(certicoq_block_t block, void (*f)(void *, certicoq_block_t, size_t, int_or_ptr *), void *f_data);
+void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(void *, certicoq_block_t, size_t, int_or_ptr *), void *f_data);
+void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(void *, certicoq_block_t, size_t, int_or_ptr *), void *f_data);
+
 #endif /* COQ_CERTICOQ_BLOCK__BLOCK_H */
