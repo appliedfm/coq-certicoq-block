@@ -7,9 +7,13 @@ theories/Block/vst/ast/ast.v
 -Q theories/Block/vst/clightgen/x86_64-linux    CertiCoq.Block.vst.clightgen
 theories/Block/vst/clightgen/x86_64-linux/block.v
 -Q theories/Block/vst/cmodel                 CertiCoq.Block.vst.cmodel
+theories/Block/vst/cmodel/certicoq_block_header.v
 theories/Block/vst/cmodel/certicoq_block.v
 theories/Block/vst/cmodel/spatial.v
 -Q theories/Block/vst/spec                   CertiCoq.Block.vst.spec
 theories/Block/vst/spec/spec.v
 -Q theories/Block/vst/verif                  CertiCoq.Block.vst.verif
-theories/Block/vst/verif/verif.v
+theories/Block/vst/verif/certicoq_block__get_field_count.v
+theories/Block/vst/verif/certicoq_block__get_odata.v
+theories/Block/vst/verif/certicoq_block__get_size.v
+theories/Block/vst/verif/certicoq_block__get_tag.v
