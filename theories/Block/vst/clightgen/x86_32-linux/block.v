@@ -77,20 +77,20 @@ Definition ___compcert_va_int32 : ident := $"__compcert_va_int32".
 Definition ___compcert_va_int64 : ident := $"__compcert_va_int64".
 Definition _block : ident := $"block".
 Definition _certicoq_block__copy : ident := $"certicoq_block__copy".
-Definition _certicoq_block__get_field : ident := $"certicoq_block__get_field".
-Definition _certicoq_block__get_field_count : ident := $"certicoq_block__get_field_count".
-Definition _certicoq_block__get_field_ptr : ident := $"certicoq_block__get_field_ptr".
-Definition _certicoq_block__get_header_ptr : ident := $"certicoq_block__get_header_ptr".
-Definition _certicoq_block__get_odata : ident := $"certicoq_block__get_odata".
-Definition _certicoq_block__get_size : ident := $"certicoq_block__get_size".
-Definition _certicoq_block__get_tag : ident := $"certicoq_block__get_tag".
+Definition _certicoq_block__field_count_get : ident := $"certicoq_block__field_count_get".
+Definition _certicoq_block__field_count_set : ident := $"certicoq_block__field_count_set".
+Definition _certicoq_block__field_get : ident := $"certicoq_block__field_get".
+Definition _certicoq_block__field_get_ptr : ident := $"certicoq_block__field_get_ptr".
+Definition _certicoq_block__field_set : ident := $"certicoq_block__field_set".
+Definition _certicoq_block__header_get_ptr : ident := $"certicoq_block__header_get_ptr".
+Definition _certicoq_block__header_set : ident := $"certicoq_block__header_set".
 Definition _certicoq_block__init : ident := $"certicoq_block__init".
+Definition _certicoq_block__odata_get : ident := $"certicoq_block__odata_get".
+Definition _certicoq_block__odata_set : ident := $"certicoq_block__odata_set".
 Definition _certicoq_block__of_header : ident := $"certicoq_block__of_header".
-Definition _certicoq_block__set_field : ident := $"certicoq_block__set_field".
-Definition _certicoq_block__set_field_count : ident := $"certicoq_block__set_field_count".
-Definition _certicoq_block__set_header : ident := $"certicoq_block__set_header".
-Definition _certicoq_block__set_odata : ident := $"certicoq_block__set_odata".
-Definition _certicoq_block__set_tag : ident := $"certicoq_block__set_tag".
+Definition _certicoq_block__size_get : ident := $"certicoq_block__size_get".
+Definition _certicoq_block__tag_get : ident := $"certicoq_block__tag_get".
+Definition _certicoq_block__tag_set : ident := $"certicoq_block__tag_set".
 Definition _dst : ident := $"dst".
 Definition _f : ident := $"f".
 Definition _fc : ident := $"fc".
@@ -129,7 +129,7 @@ Definition f_certicoq_block__init := {|
       (Econst_int (Int.repr 1) tint) (tptr (talignas 2%N (tptr tvoid)))))
   (Ssequence
     (Scall None
-      (Evar _certicoq_block__set_header (Tfunction
+      (Evar _certicoq_block__header_set (Tfunction
                                           (Tcons
                                             (tptr (talignas 2%N (tptr tvoid)))
                                             (Tcons (tptr tuint) Tnil)) tvoid
@@ -170,7 +170,7 @@ Definition f_certicoq_block__copy := {|
 (Ssequence
   (Ssequence
     (Scall (Some _t'1)
-      (Evar _certicoq_block__get_header_ptr (Tfunction
+      (Evar _certicoq_block__header_get_ptr (Tfunction
                                               (Tcons
                                                 (tptr (talignas 2%N (tptr tvoid)))
                                                 Tnil) (tptr tuint)
@@ -192,7 +192,7 @@ Definition f_certicoq_block__copy := {|
     (Ssequence
       (Ssequence
         (Scall (Some _t'3)
-          (Evar _certicoq_block__get_field_count (Tfunction
+          (Evar _certicoq_block__field_count_get (Tfunction
                                                    (Tcons (tptr tuint) Tnil)
                                                    tuint cc_default))
           ((Etempvar _hd (tptr tuint)) :: nil))
@@ -209,7 +209,7 @@ Definition f_certicoq_block__copy := {|
               (Ssequence
                 (Ssequence
                   (Scall (Some _t'4)
-                    (Evar _certicoq_block__get_field (Tfunction
+                    (Evar _certicoq_block__field_get (Tfunction
                                                        (Tcons
                                                          (tptr (talignas 2%N (tptr tvoid)))
                                                          (Tcons tuint Tnil))
@@ -219,7 +219,7 @@ Definition f_certicoq_block__copy := {|
                      (Etempvar _i tuint) :: nil))
                   (Sset _f (Etempvar _t'4 (talignas 2%N (tptr tvoid)))))
                 (Scall None
-                  (Evar _certicoq_block__set_field (Tfunction
+                  (Evar _certicoq_block__field_set (Tfunction
                                                      (Tcons
                                                        (tptr (talignas 2%N (tptr tvoid)))
                                                        (Tcons tuint
@@ -236,7 +236,7 @@ Definition f_certicoq_block__copy := {|
         (Sreturn (Some (Etempvar _ret (tptr (talignas 2%N (tptr tvoid))))))))))
 |}.
 
-Definition f_certicoq_block__get_header_ptr := {|
+Definition f_certicoq_block__header_get_ptr := {|
   fn_return := (tptr tuint);
   fn_callconv := cc_default;
   fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) :: nil);
@@ -250,7 +250,7 @@ Definition f_certicoq_block__get_header_ptr := {|
                    (tptr (talignas 2%N (tptr tvoid)))) (tptr tuint))))
 |}.
 
-Definition f_certicoq_block__set_header := {|
+Definition f_certicoq_block__header_set := {|
   fn_return := tvoid;
   fn_callconv := cc_default;
   fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
@@ -273,7 +273,7 @@ Definition f_certicoq_block__set_header := {|
     (Etempvar _t'1 (talignas 2%N (tptr tvoid)))))
 |}.
 
-Definition f_certicoq_block__get_size := {|
+Definition f_certicoq_block__size_get := {|
   fn_return := tuint;
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: nil);
@@ -290,7 +290,7 @@ Definition f_certicoq_block__get_size := {|
       (Ssequence
         (Ssequence
           (Scall (Some _t'1)
-            (Evar _certicoq_block__get_field_count (Tfunction
+            (Evar _certicoq_block__field_count_get (Tfunction
                                                      (Tcons (tptr tuint)
                                                        Tnil) tuint
                                                      cc_default))
@@ -307,7 +307,7 @@ Definition f_certicoq_block__get_size := {|
           (Sreturn (Some (Etempvar _t'2 tuint))))))))
 |}.
 
-Definition f_certicoq_block__get_field_count := {|
+Definition f_certicoq_block__field_count_get := {|
   fn_return := tuint;
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: nil);
@@ -323,7 +323,7 @@ Definition f_certicoq_block__get_field_count := {|
                    (Econst_int (Int.repr 10) tint) tuint))))
 |}.
 
-Definition f_certicoq_block__set_field_count := {|
+Definition f_certicoq_block__field_count_set := {|
   fn_return := tvoid;
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: (_size, tuint) :: nil);
@@ -350,7 +350,7 @@ Definition f_certicoq_block__set_field_count := {|
         tuint) tuint)))
 |}.
 
-Definition f_certicoq_block__get_tag := {|
+Definition f_certicoq_block__tag_get := {|
   fn_return := tuchar;
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: nil);
@@ -366,8 +366,8 @@ Definition f_certicoq_block__get_tag := {|
                    (Econst_int (Int.repr 255) tint) tuint))))
 |}.
 
-Definition f_certicoq_block__set_tag := {|
-  fn_return := tuint;
+Definition f_certicoq_block__tag_set := {|
+  fn_return := tvoid;
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: (_tag, tuchar) :: nil);
   fn_vars := nil;
@@ -378,13 +378,17 @@ Definition f_certicoq_block__set_tag := {|
     (Ederef
       (Ebinop Oadd (Etempvar _header (tptr tuint))
         (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint))
-  (Sreturn (Some (Ebinop Oor
-                   (Ebinop Oand (Etempvar _t'1 tuint)
-                     (Eunop Onotint (Econst_int (Int.repr 255) tint) tint)
-                     tuint) (Etempvar _tag tuchar) tuint))))
+  (Sassign
+    (Ederef
+      (Ebinop Oadd (Etempvar _header (tptr tuint))
+        (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint)
+    (Ebinop Oor
+      (Ebinop Oand (Etempvar _t'1 tuint)
+        (Eunop Onotint (Econst_int (Int.repr 255) tint) tint) tuint)
+      (Etempvar _tag tuchar) tuint)))
 |}.
 
-Definition f_certicoq_block__get_odata := {|
+Definition f_certicoq_block__odata_get := {|
   fn_return := tuchar;
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: nil);
@@ -402,7 +406,7 @@ Definition f_certicoq_block__get_odata := {|
                    (Econst_int (Int.repr 3) tint) tuint))))
 |}.
 
-Definition f_certicoq_block__set_odata := {|
+Definition f_certicoq_block__odata_set := {|
   fn_return := tvoid;
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: (_odata, tuchar) :: nil);
@@ -427,7 +431,7 @@ Definition f_certicoq_block__set_odata := {|
         tint) tuint)))
 |}.
 
-Definition f_certicoq_block__get_field_ptr := {|
+Definition f_certicoq_block__field_get_ptr := {|
   fn_return := (tptr (talignas 2%N (tptr tvoid)));
   fn_callconv := cc_default;
   fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
@@ -440,7 +444,7 @@ Definition f_certicoq_block__get_field_ptr := {|
                  (Etempvar _field tuint) (tptr (talignas 2%N (tptr tvoid))))))
 |}.
 
-Definition f_certicoq_block__get_field := {|
+Definition f_certicoq_block__field_get := {|
   fn_return := (talignas 2%N (tptr tvoid));
   fn_callconv := cc_default;
   fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
@@ -457,7 +461,7 @@ Definition f_certicoq_block__get_field := {|
   (Sreturn (Some (Etempvar _t'1 (talignas 2%N (tptr tvoid))))))
 |}.
 
-Definition f_certicoq_block__set_field := {|
+Definition f_certicoq_block__field_set := {|
   fn_return := tvoid;
   fn_callconv := cc_default;
   fn_params := ((_block, (tptr (talignas 2%N (tptr tvoid)))) ::
@@ -750,27 +754,27 @@ Definition global_definitions : list (ident * globdef fundef type) :=
  (_certicoq_block__init, Gfun(Internal f_certicoq_block__init)) ::
  (_certicoq_block__of_header, Gfun(Internal f_certicoq_block__of_header)) ::
  (_certicoq_block__copy, Gfun(Internal f_certicoq_block__copy)) ::
- (_certicoq_block__get_header_ptr, Gfun(Internal f_certicoq_block__get_header_ptr)) ::
- (_certicoq_block__set_header, Gfun(Internal f_certicoq_block__set_header)) ::
- (_certicoq_block__get_size, Gfun(Internal f_certicoq_block__get_size)) ::
- (_certicoq_block__get_field_count, Gfun(Internal f_certicoq_block__get_field_count)) ::
- (_certicoq_block__set_field_count, Gfun(Internal f_certicoq_block__set_field_count)) ::
- (_certicoq_block__get_tag, Gfun(Internal f_certicoq_block__get_tag)) ::
- (_certicoq_block__set_tag, Gfun(Internal f_certicoq_block__set_tag)) ::
- (_certicoq_block__get_odata, Gfun(Internal f_certicoq_block__get_odata)) ::
- (_certicoq_block__set_odata, Gfun(Internal f_certicoq_block__set_odata)) ::
- (_certicoq_block__get_field_ptr, Gfun(Internal f_certicoq_block__get_field_ptr)) ::
- (_certicoq_block__get_field, Gfun(Internal f_certicoq_block__get_field)) ::
- (_certicoq_block__set_field, Gfun(Internal f_certicoq_block__set_field)) ::
+ (_certicoq_block__header_get_ptr, Gfun(Internal f_certicoq_block__header_get_ptr)) ::
+ (_certicoq_block__header_set, Gfun(Internal f_certicoq_block__header_set)) ::
+ (_certicoq_block__size_get, Gfun(Internal f_certicoq_block__size_get)) ::
+ (_certicoq_block__field_count_get, Gfun(Internal f_certicoq_block__field_count_get)) ::
+ (_certicoq_block__field_count_set, Gfun(Internal f_certicoq_block__field_count_set)) ::
+ (_certicoq_block__tag_get, Gfun(Internal f_certicoq_block__tag_get)) ::
+ (_certicoq_block__tag_set, Gfun(Internal f_certicoq_block__tag_set)) ::
+ (_certicoq_block__odata_get, Gfun(Internal f_certicoq_block__odata_get)) ::
+ (_certicoq_block__odata_set, Gfun(Internal f_certicoq_block__odata_set)) ::
+ (_certicoq_block__field_get_ptr, Gfun(Internal f_certicoq_block__field_get_ptr)) ::
+ (_certicoq_block__field_get, Gfun(Internal f_certicoq_block__field_get)) ::
+ (_certicoq_block__field_set, Gfun(Internal f_certicoq_block__field_set)) ::
  nil).
 
 Definition public_idents : list ident :=
-(_certicoq_block__set_field :: _certicoq_block__get_field ::
- _certicoq_block__get_field_ptr :: _certicoq_block__set_odata ::
- _certicoq_block__get_odata :: _certicoq_block__set_tag ::
- _certicoq_block__get_tag :: _certicoq_block__set_field_count ::
- _certicoq_block__get_field_count :: _certicoq_block__get_size ::
- _certicoq_block__set_header :: _certicoq_block__get_header_ptr ::
+(_certicoq_block__field_set :: _certicoq_block__field_get ::
+ _certicoq_block__field_get_ptr :: _certicoq_block__odata_set ::
+ _certicoq_block__odata_get :: _certicoq_block__tag_set ::
+ _certicoq_block__tag_get :: _certicoq_block__field_count_set ::
+ _certicoq_block__field_count_get :: _certicoq_block__size_get ::
+ _certicoq_block__header_set :: _certicoq_block__header_get_ptr ::
  _certicoq_block__copy :: _certicoq_block__of_header ::
  _certicoq_block__init :: _int_or_ptr__of_int :: ___builtin_debug ::
  ___builtin_write32_reversed :: ___builtin_write16_reversed ::
@@ -797,5 +801,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\n1fb9d0ecbff15fd369c675b65cf565b506ca0024f9e6279cb8f0f459d8a6a15f  src/c/include/coq-vsu-certicoq-block/src/block.c
-f70fe8a20f014957c770d19af694fc711390130a5a6b535b7dd820976b48dce0  src/c/include/coq-vsu-certicoq-block/block.h\n*)
+(*\nInput hashes (sha256):\n\n55b60520cc53c1db13a8e553a1812376f573febbbcbb271c7edb58ce9d46eccd  src/c/include/coq-vsu-certicoq-block/src/block.c
+cf4c7721bd3ad0ad24dbfe90b3277b6f4fc8706de32debac5e0fe7a1fdeb95c0  src/c/include/coq-vsu-certicoq-block/block.h\n*)

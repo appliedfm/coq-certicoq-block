@@ -19,6 +19,42 @@ Record BlockHeader :=
   block_header_odata__range: 0 <= block_header_odata < 4;
 }.
 
+Definition block_header_field_count_set (h: BlockHeader) (z: Z)
+  (Hz: 0 <= z < two_p (word_size * 8 - 10)):
+  BlockHeader
+ := {|
+  block_header_field_count := z;
+  block_header_tag := block_header_tag h;
+  block_header_odata := block_header_odata h;
+  block_header_field_count__range := Hz;
+  block_header_tag__range := block_header_tag__range h;
+  block_header_odata__range := block_header_odata__range h;
+|}.
+
+Definition block_header_tag_set (h: BlockHeader) (z: Z)
+  (Hz: 0 <= z < 256):
+  BlockHeader
+ := {|
+  block_header_field_count := block_header_field_count h;
+  block_header_tag := z;
+  block_header_odata := block_header_odata h;
+  block_header_field_count__range := block_header_field_count__range h;
+  block_header_tag__range := Hz;
+  block_header_odata__range := block_header_odata__range h;
+|}.
+
+Definition block_header_odata_set (h: BlockHeader) (z: Z)
+  (Hz: 0 <= z < 4):
+  BlockHeader
+ := {|
+  block_header_field_count := block_header_field_count h;
+  block_header_tag := block_header_tag h;
+  block_header_odata := z;
+  block_header_field_count__range := block_header_field_count__range h;
+  block_header_tag__range := block_header_tag__range h;
+  block_header_odata__range := Hz;
+|}.
+
 Lemma block_header_field_count__max (h: BlockHeader):
   0 <= block_header_field_count h <= if Archi.ptr64 then Int64.max_unsigned else Int.max_unsigned.
 Proof.

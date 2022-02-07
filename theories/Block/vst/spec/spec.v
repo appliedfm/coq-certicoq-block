@@ -7,6 +7,7 @@ From CertiCoq Require Import Block.vst.cmodel.certicoq_block_header.
 From CertiCoq Require Import Block.vst.cmodel.certicoq_block.
 From CertiCoq Require Import Block.vst.clightgen.block.
 
+
 Definition theader: type
  := if Archi.ptr64
     then tulong
@@ -17,8 +18,9 @@ Definition tsize_t: type
     then tulong
     else tuint.
 
-Definition certicoq_block__get_size_spec :=
-  DECLARE _certicoq_block__get_size
+
+Definition certicoq_block__size_get_spec :=
+  DECLARE _certicoq_block__size_get
   WITH
     h : BlockHeader,
     sh : share,
@@ -34,8 +36,8 @@ Definition certicoq_block__get_size_spec :=
     SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
 
 
-Definition certicoq_block__get_field_count_spec :=
-  DECLARE _certicoq_block__get_field_count
+Definition certicoq_block__field_count_get_spec :=
+  DECLARE _certicoq_block__field_count_get
   WITH
     h : BlockHeader,
     sh : share,
@@ -51,8 +53,29 @@ Definition certicoq_block__get_field_count_spec :=
     SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
 
 
-Definition certicoq_block__get_tag_spec :=
-  DECLARE _certicoq_block__get_tag
+Definition certicoq_block__field_count_set_spec :=
+  DECLARE _certicoq_block__field_count_set
+  WITH
+    h : BlockHeader,
+    sh : share,
+    p : val,
+    z : {z: Z | 0 <= z < two_p (constants.word_size * 8 - 10)}
+  PRE [ tptr theader, tsize_t ]
+    PROP (writable_share sh)
+    PARAMS
+      ( p
+      ; if Archi.ptr64 then Vlong (Int64.repr (proj1_sig z)) else Vint (Int.repr (proj1_sig z))
+      )
+    GLOBALS ()
+    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+  POST [ tvoid ]
+    PROP ()
+    LOCAL ()
+    SEP (data_at sh (tarray theader 1) [block_header_encode_val (block_header_field_count_set h (proj1_sig z) (proj2_sig z))] p).
+
+
+Definition certicoq_block__tag_get_spec :=
+  DECLARE _certicoq_block__tag_get
   WITH
     h : BlockHeader,
     sh : share,
@@ -68,8 +91,29 @@ Definition certicoq_block__get_tag_spec :=
     SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
 
 
-Definition certicoq_block__get_odata_spec :=
-  DECLARE _certicoq_block__get_odata
+Definition certicoq_block__tag_set_spec :=
+  DECLARE _certicoq_block__tag_set
+  WITH
+    h : BlockHeader,
+    sh : share,
+    p : val,
+    z : {z: Z | 0 <= z < 256}
+  PRE [ tptr theader, tuchar ]
+    PROP (writable_share sh)
+    PARAMS
+      ( p
+      ; Vint (Int.repr (proj1_sig z))
+      )
+    GLOBALS ()
+    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+  POST [ tvoid ]
+    PROP ()
+    LOCAL ()
+    SEP (data_at sh (tarray theader 1) [block_header_encode_val (block_header_tag_set h (proj1_sig z) (proj2_sig z))] p).
+
+
+Definition certicoq_block__odata_get_spec :=
+  DECLARE _certicoq_block__odata_get
   WITH
     h : BlockHeader,
     sh : share,
@@ -85,9 +129,33 @@ Definition certicoq_block__get_odata_spec :=
     SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
 
 
+Definition certicoq_block__odata_set_spec :=
+  DECLARE _certicoq_block__odata_set
+  WITH
+    h : BlockHeader,
+    sh : share,
+    p : val,
+    z : {z: Z | 0 <= z < 4}
+  PRE [ tptr theader, tuchar ]
+    PROP (writable_share sh)
+    PARAMS
+      ( p
+      ; Vint (Int.repr (proj1_sig z))
+      )
+    GLOBALS ()
+    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+  POST [ tvoid ]
+    PROP ()
+    LOCAL ()
+    SEP (data_at sh (tarray theader 1) [block_header_encode_val (block_header_odata_set h (proj1_sig z) (proj2_sig z))] p).
+
+
 Definition ASI: funspecs := ltac:(with_library prog
-  [ certicoq_block__get_size_spec
-  ; certicoq_block__get_field_count_spec
-  ; certicoq_block__get_tag_spec
-  ; certicoq_block__get_odata_spec
+  [ certicoq_block__size_get_spec
+  ; certicoq_block__field_count_get_spec
+  ; certicoq_block__field_count_set_spec
+  ; certicoq_block__tag_get_spec
+  ; certicoq_block__tag_set_spec
+  ; certicoq_block__odata_get_spec
+  ; certicoq_block__odata_set_spec
   ]).

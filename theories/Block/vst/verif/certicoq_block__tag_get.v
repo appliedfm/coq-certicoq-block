@@ -6,7 +6,7 @@ From CertiCoq Require Import Block.vst.cmodel.certicoq_block_header.
 From CertiCoq Require Import Block.vst.cmodel.certicoq_block.
 From CertiCoq Require Import Block.vst.spec.spec.
 
-Lemma body: semax_body Vprog ASI f_certicoq_block__get_tag certicoq_block__get_tag_spec.
+Lemma body: semax_body Vprog ASI f_certicoq_block__tag_get certicoq_block__tag_get_spec.
 Proof.
   start_function.
   forward.
