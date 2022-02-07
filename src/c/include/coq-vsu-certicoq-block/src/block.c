@@ -41,11 +41,9 @@ void certicoq_block__header_set(certicoq_block_t block, const certicoq_block_hea
 
 size_t certicoq_block__size_get(const certicoq_block_header_t *header)
 {
-    const size_t zero = 0;
     const size_t one = 1;
-    const size_t two = 2;
     const size_t fc = certicoq_block__field_count_get(header);
-    return fc > zero ? one + fc : two;
+    return one + fc;
 }
 
 size_t certicoq_block__field_count_get(const certicoq_block_header_t *header)
@@ -55,7 +53,8 @@ size_t certicoq_block__field_count_get(const certicoq_block_header_t *header)
 
 void certicoq_block__field_count_set(certicoq_block_header_t *header, size_t size)
 {
-    header[0] = (header[0] & ~((1 << 10) - 1)) | (size << 10);
+    const certicoq_block_header_t mask = ~(((certicoq_block_header_t)1 << 10) - 1);
+    header[0] = (header[0] & mask) | (size << 10);
 }
 
 certicoq_block_tag_t certicoq_block__tag_get(const certicoq_block_header_t *header)
@@ -65,7 +64,8 @@ certicoq_block_tag_t certicoq_block__tag_get(const certicoq_block_header_t *head
 
 void certicoq_block__tag_set(certicoq_block_header_t *header, certicoq_block_tag_t tag)
 {
-    header[0] = (header[0] & ~0xff) | tag;
+    const certicoq_block_header_t mask = ~0xff;
+    header[0] = (header[0] & mask) | tag;
 }
 
 uint8_t certicoq_block__odata_get(const certicoq_block_header_t *header)
@@ -75,7 +75,8 @@ uint8_t certicoq_block__odata_get(const certicoq_block_header_t *header)
 
 void certicoq_block__odata_set(certicoq_block_header_t *header, uint8_t odata)
 {
-    header[0] = (header[0] & ~(0x03 << 8)) | (odata << 8);
+    const certicoq_block_header_t mask = ~((certicoq_block_header_t)0x03 << 8);
+    header[0] = (header[0] & mask) | (odata << 8);
 }
 
 int_or_ptr *certicoq_block__field_get_ptr(certicoq_block_t block, size_t field)

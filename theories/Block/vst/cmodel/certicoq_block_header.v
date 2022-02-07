@@ -98,7 +98,7 @@ Definition block_header_odata_val (h: BlockHeader): val
  := Vint (Int.repr (block_header_odata h)).
 
 Definition block_header_size (h: BlockHeader): Z
- := Z.max 2 (1 + block_header_field_count h).
+ := 1 + block_header_field_count h.
 
 
 Definition block_header_size_val (h: BlockHeader): val

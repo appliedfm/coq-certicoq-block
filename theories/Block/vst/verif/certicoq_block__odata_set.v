@@ -12,8 +12,10 @@ Proof.
   unfold block_header_at.
   forward.
   forward.
+  forward.
   entailer!.
   clear.
+  destruct z as [z Hz].
   cbv [upd_Znth].
   cbv [sublist].
   unfold block_header_odata_set, block_header_encode_val.

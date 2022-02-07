@@ -12,10 +12,12 @@ Proof.
   unfold block_header_at.
   forward.
   forward.
+  forward.
   entailer!.
   clear.
   cbv [upd_Znth].
   cbv [sublist].
+  destruct z as [z Hz].
   unfold block_header_field_count_set, block_header_encode_val.
   simpl.
   admit.

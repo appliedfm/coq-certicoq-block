@@ -101,15 +101,14 @@ Definition _header : ident := $"header".
 Definition _i : ident := $"i".
 Definition _int_or_ptr__of_int : ident := $"int_or_ptr__of_int".
 Definition _main : ident := $"main".
+Definition _mask : ident := $"mask".
 Definition _odata : ident := $"odata".
 Definition _one : ident := $"one".
 Definition _ret : ident := $"ret".
 Definition _size : ident := $"size".
 Definition _src : ident := $"src".
 Definition _tag : ident := $"tag".
-Definition _two : ident := $"two".
 Definition _x : ident := $"x".
-Definition _zero : ident := $"zero".
 Definition _t'1 : ident := 128%positive.
 Definition _t'2 : ident := 129%positive.
 Definition _t'3 : ident := 130%positive.
@@ -278,33 +277,20 @@ Definition f_certicoq_block__size_get := {|
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: nil);
   fn_vars := nil;
-  fn_temps := ((_zero, tuint) :: (_one, tuint) :: (_two, tuint) ::
-               (_fc, tuint) :: (_t'2, tuint) :: (_t'1, tuint) :: nil);
+  fn_temps := ((_one, tuint) :: (_fc, tuint) :: (_t'1, tuint) :: nil);
   fn_body :=
 (Ssequence
-  (Sset _zero (Econst_int (Int.repr 0) tint))
+  (Sset _one (Econst_int (Int.repr 1) tint))
   (Ssequence
-    (Sset _one (Econst_int (Int.repr 1) tint))
     (Ssequence
-      (Sset _two (Econst_int (Int.repr 2) tint))
-      (Ssequence
-        (Ssequence
-          (Scall (Some _t'1)
-            (Evar _certicoq_block__field_count_get (Tfunction
-                                                     (Tcons (tptr tuint)
-                                                       Tnil) tuint
-                                                     cc_default))
-            ((Etempvar _header (tptr tuint)) :: nil))
-          (Sset _fc (Etempvar _t'1 tuint)))
-        (Ssequence
-          (Sifthenelse (Ebinop Ogt (Etempvar _fc tuint)
-                         (Etempvar _zero tuint) tint)
-            (Sset _t'2
-              (Ecast
-                (Ebinop Oadd (Etempvar _one tuint) (Etempvar _fc tuint)
-                  tuint) tuint))
-            (Sset _t'2 (Ecast (Etempvar _two tuint) tuint)))
-          (Sreturn (Some (Etempvar _t'2 tuint))))))))
+      (Scall (Some _t'1)
+        (Evar _certicoq_block__field_count_get (Tfunction
+                                                 (Tcons (tptr tuint) Tnil)
+                                                 tuint cc_default))
+        ((Etempvar _header (tptr tuint)) :: nil))
+      (Sset _fc (Etempvar _t'1 tuint)))
+    (Sreturn (Some (Ebinop Oadd (Etempvar _one tuint) (Etempvar _fc tuint)
+                     tuint)))))
 |}.
 
 Definition f_certicoq_block__field_count_get := {|
@@ -328,26 +314,28 @@ Definition f_certicoq_block__field_count_set := {|
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: (_size, tuint) :: nil);
   fn_vars := nil;
-  fn_temps := ((_t'1, tuint) :: nil);
+  fn_temps := ((_mask, tuint) :: (_t'1, tuint) :: nil);
   fn_body :=
 (Ssequence
-  (Sset _t'1
-    (Ederef
-      (Ebinop Oadd (Etempvar _header (tptr tuint))
-        (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint))
-  (Sassign
-    (Ederef
-      (Ebinop Oadd (Etempvar _header (tptr tuint))
-        (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint)
-    (Ebinop Oor
-      (Ebinop Oand (Etempvar _t'1 tuint)
-        (Eunop Onotint
-          (Ebinop Osub
-            (Ebinop Oshl (Econst_int (Int.repr 1) tint)
-              (Econst_int (Int.repr 10) tint) tint)
-            (Econst_int (Int.repr 1) tint) tint) tint) tuint)
-      (Ebinop Oshl (Etempvar _size tuint) (Econst_int (Int.repr 10) tint)
-        tuint) tuint)))
+  (Sset _mask
+    (Eunop Onotint
+      (Ebinop Osub
+        (Ebinop Oshl (Ecast (Econst_int (Int.repr 1) tint) tuint)
+          (Econst_int (Int.repr 10) tint) tuint)
+        (Econst_int (Int.repr 1) tint) tuint) tuint))
+  (Ssequence
+    (Sset _t'1
+      (Ederef
+        (Ebinop Oadd (Etempvar _header (tptr tuint))
+          (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint))
+    (Sassign
+      (Ederef
+        (Ebinop Oadd (Etempvar _header (tptr tuint))
+          (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint)
+      (Ebinop Oor
+        (Ebinop Oand (Etempvar _t'1 tuint) (Etempvar _mask tuint) tuint)
+        (Ebinop Oshl (Etempvar _size tuint) (Econst_int (Int.repr 10) tint)
+          tuint) tuint))))
 |}.
 
 Definition f_certicoq_block__tag_get := {|
@@ -371,21 +359,22 @@ Definition f_certicoq_block__tag_set := {|
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: (_tag, tuchar) :: nil);
   fn_vars := nil;
-  fn_temps := ((_t'1, tuint) :: nil);
+  fn_temps := ((_mask, tuint) :: (_t'1, tuint) :: nil);
   fn_body :=
 (Ssequence
-  (Sset _t'1
-    (Ederef
-      (Ebinop Oadd (Etempvar _header (tptr tuint))
-        (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint))
-  (Sassign
-    (Ederef
-      (Ebinop Oadd (Etempvar _header (tptr tuint))
-        (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint)
-    (Ebinop Oor
-      (Ebinop Oand (Etempvar _t'1 tuint)
-        (Eunop Onotint (Econst_int (Int.repr 255) tint) tint) tuint)
-      (Etempvar _tag tuchar) tuint)))
+  (Sset _mask (Eunop Onotint (Econst_int (Int.repr 255) tint) tint))
+  (Ssequence
+    (Sset _t'1
+      (Ederef
+        (Ebinop Oadd (Etempvar _header (tptr tuint))
+          (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint))
+    (Sassign
+      (Ederef
+        (Ebinop Oadd (Etempvar _header (tptr tuint))
+          (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint)
+      (Ebinop Oor
+        (Ebinop Oand (Etempvar _t'1 tuint) (Etempvar _mask tuint) tuint)
+        (Etempvar _tag tuchar) tuint))))
 |}.
 
 Definition f_certicoq_block__odata_get := {|
@@ -411,24 +400,26 @@ Definition f_certicoq_block__odata_set := {|
   fn_callconv := cc_default;
   fn_params := ((_header, (tptr tuint)) :: (_odata, tuchar) :: nil);
   fn_vars := nil;
-  fn_temps := ((_t'1, tuint) :: nil);
+  fn_temps := ((_mask, tuint) :: (_t'1, tuint) :: nil);
   fn_body :=
 (Ssequence
-  (Sset _t'1
-    (Ederef
-      (Ebinop Oadd (Etempvar _header (tptr tuint))
-        (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint))
-  (Sassign
-    (Ederef
-      (Ebinop Oadd (Etempvar _header (tptr tuint))
-        (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint)
-    (Ebinop Oor
-      (Ebinop Oand (Etempvar _t'1 tuint)
-        (Eunop Onotint
-          (Ebinop Oshl (Econst_int (Int.repr 3) tint)
-            (Econst_int (Int.repr 8) tint) tint) tint) tuint)
-      (Ebinop Oshl (Etempvar _odata tuchar) (Econst_int (Int.repr 8) tint)
-        tint) tuint)))
+  (Sset _mask
+    (Eunop Onotint
+      (Ebinop Oshl (Ecast (Econst_int (Int.repr 3) tint) tuint)
+        (Econst_int (Int.repr 8) tint) tuint) tuint))
+  (Ssequence
+    (Sset _t'1
+      (Ederef
+        (Ebinop Oadd (Etempvar _header (tptr tuint))
+          (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint))
+    (Sassign
+      (Ederef
+        (Ebinop Oadd (Etempvar _header (tptr tuint))
+          (Econst_int (Int.repr 0) tint) (tptr tuint)) tuint)
+      (Ebinop Oor
+        (Ebinop Oand (Etempvar _t'1 tuint) (Etempvar _mask tuint) tuint)
+        (Ebinop Oshl (Etempvar _odata tuchar) (Econst_int (Int.repr 8) tint)
+          tint) tuint))))
 |}.
 
 Definition f_certicoq_block__field_get_ptr := {|
@@ -801,5 +792,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\n55b60520cc53c1db13a8e553a1812376f573febbbcbb271c7edb58ce9d46eccd  src/c/include/coq-vsu-certicoq-block/src/block.c
+(*\nInput hashes (sha256):\n\na41efd57b368416fb5ba432d41223bae210bb6431ae150364c0ac78aa1e3ab8c  src/c/include/coq-vsu-certicoq-block/src/block.c
 cf4c7721bd3ad0ad24dbfe90b3277b6f4fc8706de32debac5e0fe7a1fdeb95c0  src/c/include/coq-vsu-certicoq-block/block.h\n*)
