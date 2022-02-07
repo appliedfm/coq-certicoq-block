@@ -9,6 +9,7 @@ From CertiCoq Require Import Block.vst.spec.spec.
 Lemma body: semax_body Vprog ASI f_certicoq_block__size_get certicoq_block__size_get_spec.
 Proof.
   start_function.
+  unfold block_header_at.
   forward.
   forward.
   forward.
@@ -16,7 +17,7 @@ Proof.
   forward_if (
     PROP ()
     LOCAL (temp _t'2 (block_header_size_val h))
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   ).
   {
     forward.

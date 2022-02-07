@@ -9,6 +9,7 @@ From CertiCoq Require Import Block.vst.spec.spec.
 Lemma body: semax_body Vprog ASI f_certicoq_block__odata_set certicoq_block__odata_set_spec.
 Proof.
   start_function.
+  unfold block_header_at.
   forward.
   forward.
   entailer!.

@@ -19,6 +19,11 @@ Definition tsize_t: type
     else tuint.
 
 
+Definition block_header_at (sh: share) (h: BlockHeader) (p: val):
+  mpred
+ := data_at sh (tarray theader 1) [block_header_encode_val h] p.
+
+
 Definition certicoq_block__size_get_spec :=
   DECLARE _certicoq_block__size_get
   WITH
@@ -29,11 +34,11 @@ Definition certicoq_block__size_get_spec :=
     PROP (readable_share sh)
     PARAMS (p)
     GLOBALS ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   POST [ tsize_t ]
     PROP ()
     LOCAL (temp ret_temp (block_header_size_val h))
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
+    SEP (block_header_at sh h p).
 
 
 Definition certicoq_block__field_count_get_spec :=
@@ -46,11 +51,11 @@ Definition certicoq_block__field_count_get_spec :=
     PROP (readable_share sh)
     PARAMS (p)
     GLOBALS ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   POST [ tsize_t ]
     PROP ()
     LOCAL (temp ret_temp (block_header_field_count_val h))
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
+    SEP (block_header_at sh h p).
 
 
 Definition certicoq_block__field_count_set_spec :=
@@ -67,11 +72,11 @@ Definition certicoq_block__field_count_set_spec :=
       ; if Archi.ptr64 then Vlong (Int64.repr (proj1_sig z)) else Vint (Int.repr (proj1_sig z))
       )
     GLOBALS ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   POST [ tvoid ]
     PROP ()
     LOCAL ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val (block_header_field_count_set h (proj1_sig z) (proj2_sig z))] p).
+    SEP (block_header_at sh (block_header_field_count_set h (proj1_sig z) (proj2_sig z)) p).
 
 
 Definition certicoq_block__tag_get_spec :=
@@ -84,11 +89,11 @@ Definition certicoq_block__tag_get_spec :=
     PROP (readable_share sh)
     PARAMS (p)
     GLOBALS ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   POST [ tuchar ]
     PROP ()
     LOCAL (temp ret_temp (block_header_tag_val h))
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
+    SEP (block_header_at sh h p).
 
 
 Definition certicoq_block__tag_set_spec :=
@@ -105,11 +110,11 @@ Definition certicoq_block__tag_set_spec :=
       ; Vint (Int.repr (proj1_sig z))
       )
     GLOBALS ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   POST [ tvoid ]
     PROP ()
     LOCAL ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val (block_header_tag_set h (proj1_sig z) (proj2_sig z))] p).
+    SEP (block_header_at sh (block_header_tag_set h (proj1_sig z) (proj2_sig z)) p).
 
 
 Definition certicoq_block__odata_get_spec :=
@@ -122,11 +127,11 @@ Definition certicoq_block__odata_get_spec :=
     PROP (readable_share sh)
     PARAMS (p)
     GLOBALS ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   POST [ tuchar ]
     PROP ()
     LOCAL (temp ret_temp (block_header_odata_val h))
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p).
+    SEP (block_header_at sh h p).
 
 
 Definition certicoq_block__odata_set_spec :=
@@ -143,11 +148,11 @@ Definition certicoq_block__odata_set_spec :=
       ; Vint (Int.repr (proj1_sig z))
       )
     GLOBALS ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val h] p)
+    SEP (block_header_at sh h p)
   POST [ tvoid ]
     PROP ()
     LOCAL ()
-    SEP (data_at sh (tarray theader 1) [block_header_encode_val (block_header_odata_set h (proj1_sig z) (proj2_sig z))] p).
+    SEP (block_header_at sh (block_header_odata_set h (proj1_sig z) (proj2_sig z)) p).
 
 
 Definition ASI: funspecs := ltac:(with_library prog
