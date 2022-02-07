@@ -94,7 +94,7 @@ void certicoq_block__field_set(certicoq_block_t block, size_t field, int_or_ptr 
     block[field] = x;
 }
 
-void certicoq_block__field_iter(certicoq_block_t block, void (*f)(void *, certicoq_block_t, size_t, int_or_ptr *), void *f_data)
+void certicoq_block__field_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_data)
 {
     size_t i;
     const certicoq_block_header_t *hd = certicoq_block__header_get_ptr(block);
@@ -102,11 +102,11 @@ void certicoq_block__field_iter(certicoq_block_t block, void (*f)(void *, certic
     for (i = 0; i < field_count; i++)
     {
         int_or_ptr *x = certicoq_block__field_get_ptr(block, i);
-        f(f_data, block, i, x);
+        f(f_data, x);
     }
 }
 
-void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(void *, certicoq_block_t, size_t, int_or_ptr *), void *f_data)
+void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_data)
 {
     size_t i;
     const certicoq_block_header_t *hd = certicoq_block__header_get_ptr(block);
@@ -116,12 +116,12 @@ void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(void *, ce
         int_or_ptr *x = certicoq_block__field_get_ptr(block, i);
         if (int_or_ptr__is_int(*x))
         {
-            f(f_data, block, i, x);
+            f(f_data, x);
         }
     }
 }
 
-void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(void *, certicoq_block_t, size_t, int_or_ptr *), void *f_data)
+void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_data)
 {
     size_t i;
     const certicoq_block_header_t *hd = certicoq_block__header_get_ptr(block);
@@ -131,7 +131,7 @@ void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(void *, ce
         int_or_ptr *x = certicoq_block__field_get_ptr(block, i);
         if (!int_or_ptr__is_int(*x))
         {
-            f(f_data, block, i, x);
+            f(f_data, x);
         }
     }
 }

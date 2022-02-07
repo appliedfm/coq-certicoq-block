@@ -481,11 +481,9 @@ Definition f_certicoq_block__field_iter := {|
                 (_f,
                  (tptr (Tfunction
                          (Tcons (tptr tvoid)
-                           (Tcons (tptr (talignas 3%N (tptr tvoid)))
-                             (Tcons tulong
-                               (Tcons (tptr (talignas 3%N (tptr tvoid)))
-                                 Tnil)))) tvoid cc_default))) ::
-                (_f_data, (tptr tvoid)) :: nil);
+                           (Tcons (tptr (talignas 3%N (tptr tvoid))) Tnil))
+                         tvoid cc_default))) :: (_f_data, (tptr tvoid)) ::
+                nil);
   fn_vars := nil;
   fn_temps := ((_i, tulong) :: (_hd, (tptr tulong)) ::
                (_field_count, tulong) ::
@@ -536,13 +534,8 @@ Definition f_certicoq_block__field_iter := {|
                                    (Tcons (tptr tvoid)
                                      (Tcons
                                        (tptr (talignas 3%N (tptr tvoid)))
-                                       (Tcons tulong
-                                         (Tcons
-                                           (tptr (talignas 3%N (tptr tvoid)))
-                                           Tnil)))) tvoid cc_default)))
+                                       Tnil)) tvoid cc_default)))
               ((Etempvar _f_data (tptr tvoid)) ::
-               (Etempvar _block (tptr (talignas 3%N (tptr tvoid)))) ::
-               (Etempvar _i tulong) ::
                (Etempvar _x (tptr (talignas 3%N (tptr tvoid)))) :: nil))))
         (Sset _i
           (Ebinop Oadd (Etempvar _i tulong) (Econst_int (Int.repr 1) tint)
@@ -556,11 +549,9 @@ Definition f_certicoq_block__field_int_iter := {|
                 (_f,
                  (tptr (Tfunction
                          (Tcons (tptr tvoid)
-                           (Tcons (tptr (talignas 3%N (tptr tvoid)))
-                             (Tcons tulong
-                               (Tcons (tptr (talignas 3%N (tptr tvoid)))
-                                 Tnil)))) tvoid cc_default))) ::
-                (_f_data, (tptr tvoid)) :: nil);
+                           (Tcons (tptr (talignas 3%N (tptr tvoid))) Tnil))
+                         tvoid cc_default))) :: (_f_data, (tptr tvoid)) ::
+                nil);
   fn_vars := nil;
   fn_temps := ((_i, tulong) :: (_hd, (tptr tulong)) ::
                (_field_count, tulong) ::
@@ -624,13 +615,8 @@ Definition f_certicoq_block__field_int_iter := {|
                                        (Tcons (tptr tvoid)
                                          (Tcons
                                            (tptr (talignas 3%N (tptr tvoid)))
-                                           (Tcons tulong
-                                             (Tcons
-                                               (tptr (talignas 3%N (tptr tvoid)))
-                                               Tnil)))) tvoid cc_default)))
+                                           Tnil)) tvoid cc_default)))
                   ((Etempvar _f_data (tptr tvoid)) ::
-                   (Etempvar _block (tptr (talignas 3%N (tptr tvoid)))) ::
-                   (Etempvar _i tulong) ::
                    (Etempvar _x (tptr (talignas 3%N (tptr tvoid)))) :: nil))
                 Sskip))))
         (Sset _i
@@ -645,11 +631,9 @@ Definition f_certicoq_block__field_ptr_iter := {|
                 (_f,
                  (tptr (Tfunction
                          (Tcons (tptr tvoid)
-                           (Tcons (tptr (talignas 3%N (tptr tvoid)))
-                             (Tcons tulong
-                               (Tcons (tptr (talignas 3%N (tptr tvoid)))
-                                 Tnil)))) tvoid cc_default))) ::
-                (_f_data, (tptr tvoid)) :: nil);
+                           (Tcons (tptr (talignas 3%N (tptr tvoid))) Tnil))
+                         tvoid cc_default))) :: (_f_data, (tptr tvoid)) ::
+                nil);
   fn_vars := nil;
   fn_temps := ((_i, tulong) :: (_hd, (tptr tulong)) ::
                (_field_count, tulong) ::
@@ -713,13 +697,8 @@ Definition f_certicoq_block__field_ptr_iter := {|
                                        (Tcons (tptr tvoid)
                                          (Tcons
                                            (tptr (talignas 3%N (tptr tvoid)))
-                                           (Tcons tulong
-                                             (Tcons
-                                               (tptr (talignas 3%N (tptr tvoid)))
-                                               Tnil)))) tvoid cc_default)))
+                                           Tnil)) tvoid cc_default)))
                   ((Etempvar _f_data (tptr tvoid)) ::
-                   (Etempvar _block (tptr (talignas 3%N (tptr tvoid)))) ::
-                   (Etempvar _i tulong) ::
                    (Etempvar _x (tptr (talignas 3%N (tptr tvoid)))) :: nil))
                 Sskip))))
         (Sset _i
@@ -1061,5 +1040,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\n34b321ed8985d849fc4c80f0d72b495ad5be5fc43a0f7b051f289588ef9ceba5  src/c/include/coq-vsu-certicoq-block/src/block.c
-cde25ba4ec7c6f11ef19fb9e7baa9e781855456b42d4d54d37e04a2bfb4e10c1  src/c/include/coq-vsu-certicoq-block/block.h\n*)
+(*\nInput hashes (sha256):\n\nda602b66b590611713e941635b66171020991a84f0fcdeafb67d4889da70f28d  src/c/include/coq-vsu-certicoq-block/src/block.c
+31a5f1fd5c6f15b55ca89c01979f6b92a9693d50a0da4f09d21bddb5ec2a929b  src/c/include/coq-vsu-certicoq-block/block.h\n*)
