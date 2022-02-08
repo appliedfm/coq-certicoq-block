@@ -10,10 +10,10 @@ typedef uint8_t certicoq_block_tag_t;
 typedef int_or_ptr *certicoq_block_t;
 
 certicoq_block_t certicoq_block__init(int_or_ptr *dst, const certicoq_block_header_t *header);
-certicoq_block_t certicoq_block__of_header(certicoq_block_header_t *header);
+certicoq_block_t certicoq_block__of_header(const certicoq_block_header_t *header);
 certicoq_block_t certicoq_block__copy(int_or_ptr *dst, const certicoq_block_t src);
 
-certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block);
+const certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block);
 void certicoq_block__header_set(certicoq_block_t block, const certicoq_block_header_t *header);
 
 size_t certicoq_block__size_get(const certicoq_block_header_t *header);

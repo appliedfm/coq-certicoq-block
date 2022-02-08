@@ -10,7 +10,7 @@ certicoq_block_t certicoq_block__init(int_or_ptr *dst, const certicoq_block_head
   return ret;
 }
 
-certicoq_block_t certicoq_block__of_header(certicoq_block_header_t *header)
+certicoq_block_t certicoq_block__of_header(const certicoq_block_header_t *header)
 {
   return (certicoq_block_t)header + 1;
 }
@@ -29,7 +29,7 @@ certicoq_block_t certicoq_block__copy(int_or_ptr *dst, const certicoq_block_t sr
   return ret;
 }
 
-certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block)
+const certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block)
 {
   return (certicoq_block_header_t *)&block[-1];
 }
