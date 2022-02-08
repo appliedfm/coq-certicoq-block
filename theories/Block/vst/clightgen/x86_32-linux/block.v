@@ -76,6 +76,7 @@ Definition ___compcert_va_float64 : ident := $"__compcert_va_float64".
 Definition ___compcert_va_int32 : ident := $"__compcert_va_int32".
 Definition ___compcert_va_int64 : ident := $"__compcert_va_int64".
 Definition _block : ident := $"block".
+Definition _c_args : ident := $"c_args".
 Definition _certicoq_block__copy : ident := $"certicoq_block__copy".
 Definition _certicoq_block__field_count_get : ident := $"certicoq_block__field_count_get".
 Definition _certicoq_block__field_count_set : ident := $"certicoq_block__field_count_set".
@@ -513,9 +514,10 @@ Definition f_certicoq_block__field_iter := {|
                 (_f,
                  (tptr (Tfunction
                          (Tcons (tptr tvoid)
-                           (Tcons (tptr (talignas 2%N (tptr tvoid))) Tnil))
-                         tvoid cc_default))) :: (_f_args, (tptr tvoid)) ::
-                nil);
+                           (Tcons (tptr tvoid)
+                             (Tcons (tptr (talignas 2%N (tptr tvoid))) Tnil)))
+                         tvoid cc_default))) :: (_c_args, (tptr tvoid)) ::
+                (_f_args, (tptr tvoid)) :: nil);
   fn_vars := nil;
   fn_temps := ((_hd, (tptr tuint)) :: (_tag, tuchar) ::
                (_field_count, tuint) :: (_i, tuint) ::
@@ -580,10 +582,12 @@ Definition f_certicoq_block__field_iter := {|
                   (Scall None
                     (Etempvar _f (tptr (Tfunction
                                          (Tcons (tptr tvoid)
-                                           (Tcons
-                                             (tptr (talignas 2%N (tptr tvoid)))
-                                             Tnil)) tvoid cc_default)))
-                    ((Etempvar _f_args (tptr tvoid)) ::
+                                           (Tcons (tptr tvoid)
+                                             (Tcons
+                                               (tptr (talignas 2%N (tptr tvoid)))
+                                               Tnil))) tvoid cc_default)))
+                    ((Etempvar _c_args (tptr tvoid)) ::
+                     (Etempvar _f_args (tptr tvoid)) ::
                      (Etempvar _x (tptr (talignas 2%N (tptr tvoid)))) :: nil))))
               (Sset _i
                 (Ebinop Oadd (Etempvar _i tuint)
@@ -598,9 +602,10 @@ Definition f_certicoq_block__field_int_iter := {|
                 (_f,
                  (tptr (Tfunction
                          (Tcons (tptr tvoid)
-                           (Tcons (tptr (talignas 2%N (tptr tvoid))) Tnil))
-                         tvoid cc_default))) :: (_f_args, (tptr tvoid)) ::
-                nil);
+                           (Tcons (tptr tvoid)
+                             (Tcons (tptr (talignas 2%N (tptr tvoid))) Tnil)))
+                         tvoid cc_default))) :: (_c_args, (tptr tvoid)) ::
+                (_f_args, (tptr tvoid)) :: nil);
   fn_vars := nil;
   fn_temps := ((_hd, (tptr tuint)) :: (_tag, tuchar) ::
                (_field_count, tuint) :: (_i, tuint) ::
@@ -679,10 +684,12 @@ Definition f_certicoq_block__field_int_iter := {|
                       (Scall None
                         (Etempvar _f (tptr (Tfunction
                                              (Tcons (tptr tvoid)
-                                               (Tcons
-                                                 (tptr (talignas 2%N (tptr tvoid)))
-                                                 Tnil)) tvoid cc_default)))
-                        ((Etempvar _f_args (tptr tvoid)) ::
+                                               (Tcons (tptr tvoid)
+                                                 (Tcons
+                                                   (tptr (talignas 2%N (tptr tvoid)))
+                                                   Tnil))) tvoid cc_default)))
+                        ((Etempvar _c_args (tptr tvoid)) ::
+                         (Etempvar _f_args (tptr tvoid)) ::
                          (Etempvar _x (tptr (talignas 2%N (tptr tvoid)))) ::
                          nil))
                       Sskip))))
@@ -699,9 +706,10 @@ Definition f_certicoq_block__field_ptr_iter := {|
                 (_f,
                  (tptr (Tfunction
                          (Tcons (tptr tvoid)
-                           (Tcons (tptr (talignas 2%N (tptr tvoid))) Tnil))
-                         tvoid cc_default))) :: (_f_args, (tptr tvoid)) ::
-                nil);
+                           (Tcons (tptr tvoid)
+                             (Tcons (tptr (talignas 2%N (tptr tvoid))) Tnil)))
+                         tvoid cc_default))) :: (_c_args, (tptr tvoid)) ::
+                (_f_args, (tptr tvoid)) :: nil);
   fn_vars := nil;
   fn_temps := ((_hd, (tptr tuint)) :: (_tag, tuchar) ::
                (_field_count, tuint) :: (_i, tuint) ::
@@ -780,10 +788,12 @@ Definition f_certicoq_block__field_ptr_iter := {|
                       (Scall None
                         (Etempvar _f (tptr (Tfunction
                                              (Tcons (tptr tvoid)
-                                               (Tcons
-                                                 (tptr (talignas 2%N (tptr tvoid)))
-                                                 Tnil)) tvoid cc_default)))
-                        ((Etempvar _f_args (tptr tvoid)) ::
+                                               (Tcons (tptr tvoid)
+                                                 (Tcons
+                                                   (tptr (talignas 2%N (tptr tvoid)))
+                                                   Tnil))) tvoid cc_default)))
+                        ((Etempvar _c_args (tptr tvoid)) ::
+                         (Etempvar _f_args (tptr tvoid)) ::
                          (Etempvar _x (tptr (talignas 2%N (tptr tvoid)))) ::
                          nil))
                       Sskip))))
@@ -1130,5 +1140,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\n6e756a567c541330e83ee0770af3c998086d9cb1a673f6118a395a5d8889c635  src/c/include/coq-vsu-certicoq-block/src/block.c
-7f24c2f784d818c61dad5d57c8ba56312f9bb110a6af4508c4f34a6b5a3ffdfc  src/c/include/coq-vsu-certicoq-block/block.h\n*)
+(*\nInput hashes (sha256):\n\nf87c35d6c4e0638c2b9f1f87febb321fbf048c6d50bfb3e388ee4177e07f56c2  src/c/include/coq-vsu-certicoq-block/src/block.c
+e0d5607156d654174bf41361bd56593f5926ae372bd7dd2839dd08e5a81cb870  src/c/include/coq-vsu-certicoq-block/block.h\n*)
