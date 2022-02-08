@@ -23,6 +23,8 @@ void certicoq_block__field_count_set(certicoq_block_header_t *header, size_t siz
 
 certicoq_block_tag_t certicoq_block__tag_get(const certicoq_block_header_t *header);
 void certicoq_block__tag_set(certicoq_block_header_t *header, certicoq_block_tag_t tag);
+certicoq_block_tag_t certicoq_block__tag_noscan_limit();
+int certicoq_block__tag_is_noscan(certicoq_block_tag_t tag);
 
 uint8_t certicoq_block__odata_get(const certicoq_block_header_t *header);
 void certicoq_block__odata_set(certicoq_block_header_t *header, uint8_t odata);
@@ -31,8 +33,8 @@ int_or_ptr *certicoq_block__field_get_ptr(certicoq_block_t block, size_t field);
 int_or_ptr certicoq_block__field_get(const certicoq_block_t block, size_t field);
 void certicoq_block__field_set(certicoq_block_t block, size_t field, int_or_ptr x);
 
-void certicoq_block__field_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_data);
-void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_data);
-void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_data);
+void certicoq_block__field_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_args);
+void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_args);
+void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(void *, int_or_ptr *), void *f_args);
 
 #endif /* COQ_CERTICOQ_BLOCK__BLOCK_H */
