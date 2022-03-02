@@ -252,7 +252,7 @@ Definition certicoq_block__field_get_ptr_spec :=
     block: val,
     field: val
   PRE [ tptr int_or_ptr_type, size_type ]
-    PROP (isptr block ; field = field_index_val f)
+    PROP (0 <= f <= block_header_field_count b ; isptr block ; field = field_index_val f)
     PARAMS (block ; field)
     GLOBALS ()
     SEP (block_at sh b block)
