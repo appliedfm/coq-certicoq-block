@@ -15,6 +15,7 @@ theories/Block/vst/spec/spec.v
 -Q theories/Block/vst/verif                  CertiCoq.Block.vst.verif
 theories/Block/vst/verif/certicoq_block__field_count_get.v
 theories/Block/vst/verif/certicoq_block__field_count_set.v
+theories/Block/vst/verif/certicoq_block__init.v
 theories/Block/vst/verif/certicoq_block__odata_get.v
 theories/Block/vst/verif/certicoq_block__odata_set.v
 theories/Block/vst/verif/certicoq_block__size_get.v

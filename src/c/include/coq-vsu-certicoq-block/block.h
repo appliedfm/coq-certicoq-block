@@ -70,7 +70,6 @@ certicoq_block_t certicoq_block__of_header(const certicoq_block_header_t *header
 certicoq_block_t certicoq_block__copy(int_or_ptr *dst, const certicoq_block_t src);
 
 const certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block);
-void certicoq_block__header_set(certicoq_block_t block, const certicoq_block_header_t *header);
 
 size_t certicoq_block__size_get(const certicoq_block_header_t *header);
 
@@ -90,7 +89,6 @@ int_or_ptr certicoq_block__field_get(const certicoq_block_t block, size_t field)
 void certicoq_block__field_set(certicoq_block_t block, size_t field, int_or_ptr x);
 
 void certicoq_block__field_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
-void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
 void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
 
 #endif /* COQ_CERTICOQ_BLOCK__BLOCK_H */

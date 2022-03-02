@@ -1,3 +1,5 @@
+From Coq Require Import Lists.List.
+
 From VST Require Import floyd.proofauto.
 
 From appliedfm Require Import int_or_ptr.vst.cmodel.val.
@@ -34,6 +36,10 @@ Definition block_at (sh: share) (h: Block) (p: val):
   mpred
  := (block_header_at sh (block_header h) (block_header_offset p) * block_fields_at sh h p)%logic.
 
+Definition undef_block_at (sh: share) (size: Z) (p: val):
+  mpred
+ := data_at sh (tarray int_or_ptr_type size) (repeat Vundef (Z.to_nat size)) p.
+
 
 Definition certicoq_block__init_spec :=
   DECLARE _certicoq_block__init
@@ -43,16 +49,15 @@ Definition certicoq_block__init_spec :=
     dst : val,
     header_sh : share,
     header: val
-  PRE [ tptr int_or_ptr_type ]
+  PRE [ tptr int_or_ptr_type, tptr block_header_type ]
     PROP (writable_share dst_sh ; readable_share header_sh)
     PARAMS (dst ; header)
     GLOBALS ()
-    SEP (block_header_at header_sh h header * memory_block dst_sh (block_header_size h) dst)
+    SEP (block_header_at header_sh h header * undef_block_at dst_sh (block_header_size h) dst)
   POST [ tptr int_or_ptr_type ]
     PROP ()
-    LOCAL (temp ret_temp (block_header_size_val h))
+    LOCAL (temp ret_temp (offset_val (sizeof block_header_type) dst))
     SEP (block_header_at header_sh h header * block_at dst_sh (block_init h) dst).
-
 
 (*
 TODO:
@@ -61,7 +66,6 @@ certicoq_block_t certicoq_block__of_header(certicoq_block_header_t *header);
 certicoq_block_t certicoq_block__copy(int_or_ptr *dst, const certicoq_block_t src);
 
 certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block);
-void certicoq_block__header_set(certicoq_block_t block, const certicoq_block_header_t *header);
 *)
 
 Definition certicoq_block__size_get_spec :=

@@ -6,7 +6,7 @@
 certicoq_block_t certicoq_block__init(int_or_ptr *dst, const certicoq_block_header_t *header)
 {
   certicoq_block_t ret = dst + 1;
-  certicoq_block__header_set(ret, header);
+  dst[0] = header[0];
   return ret;
 }
 
@@ -32,11 +32,6 @@ certicoq_block_t certicoq_block__copy(int_or_ptr *dst, const certicoq_block_t sr
 const certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block)
 {
   return (certicoq_block_header_t *)&block[-1];
-}
-
-void certicoq_block__header_set(certicoq_block_t block, const certicoq_block_header_t *header)
-{
-  block[-1] = int_or_ptr__of_int(*header);
 }
 
 size_t certicoq_block__size_get(const certicoq_block_header_t *header)
@@ -116,25 +111,6 @@ void certicoq_block__field_iter(certicoq_block_t block, void (*f)(const void *, 
     {
       int_or_ptr *x = certicoq_block__field_get_ptr(block, i);
       f(c_args, f_args, x);
-    }
-  }
-}
-
-void certicoq_block__field_int_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args)
-{
-  const certicoq_block_header_t *hd = certicoq_block__header_get_ptr(block);
-  const certicoq_block_tag_t tag = certicoq_block__tag_get(hd);
-  if (!certicoq_block__tag_is_noscan(tag))
-  {
-    const size_t field_count = certicoq_block__field_count_get(hd);
-    size_t i;
-    for (i = 0; i < field_count; i++)
-    {
-      int_or_ptr *x = certicoq_block__field_get_ptr(block, i);
-      if (int_or_ptr__is_int(*x))
-      {
-        f(c_args, f_args, x);
-      }
     }
   }
 }
