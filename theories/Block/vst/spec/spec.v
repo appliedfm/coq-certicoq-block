@@ -20,6 +20,10 @@ Definition size_type: type
     then tulong
     else tuint.
 
+Definition field_index_val (field: Z): val
+ := if Archi.ptr64
+    then Vlong (Int64.repr field)
+    else Vint (Int.repr field).
 
 Definition block_header_offset (p: val): val
  := offset_val (- constants.word_size) p.
@@ -44,10 +48,10 @@ Definition undef_block_at (sh: share) (size: Z) (p: val):
 Definition certicoq_block__init_spec :=
   DECLARE _certicoq_block__init
   WITH
-    h : BlockHeader,
-    dst_sh : share,
-    dst : val,
-    header_sh : share,
+    h: BlockHeader,
+    dst_sh: share,
+    dst: val,
+    header_sh: share,
     header: val
   PRE [ tptr int_or_ptr_type, tptr block_header_type ]
     PROP (writable_share dst_sh ; readable_share header_sh)
@@ -59,14 +63,55 @@ Definition certicoq_block__init_spec :=
     LOCAL (temp ret_temp (offset_val (sizeof block_header_type) dst))
     SEP (block_header_at header_sh h header * block_at dst_sh (block_init h) dst).
 
-(*
-TODO:
+Definition certicoq_block__of_header_spec :=
+  DECLARE _certicoq_block__of_header
+  WITH
+    b: Block,
+    sh: share,
+    header: val
+  PRE [ tptr block_header_type ]
+    PROP (isptr header)
+    PARAMS (header)
+    GLOBALS ()
+    SEP (block_at sh b (offset_val (sizeof block_header_type) header))
+  POST [ tptr int_or_ptr_type ]
+    PROP ()
+    LOCAL (temp ret_temp (offset_val (sizeof block_header_type) header))
+    SEP (block_at sh b (offset_val (sizeof block_header_type) header)).
 
-certicoq_block_t certicoq_block__of_header(certicoq_block_header_t *header);
-certicoq_block_t certicoq_block__copy(int_or_ptr *dst, const certicoq_block_t src);
+Definition certicoq_block__copy_spec :=
+  DECLARE _certicoq_block__copy
+  WITH
+    b: Block,
+    src_sh: share,
+    dst_sh: share,
+    dst: val,
+    src: val
+  PRE [ tptr int_or_ptr_type, tptr int_or_ptr_type ]
+    PROP (writable_share dst_sh ; readable_share src_sh)
+    PARAMS (dst ; src)
+    GLOBALS ()
+    SEP (undef_block_at dst_sh (block_header_size (block_header b)) dst * block_at src_sh b src)
+  POST [ tptr int_or_ptr_type ]
+    PROP ()
+    LOCAL (temp ret_temp (offset_val (sizeof block_header_type) dst))
+    SEP (block_at dst_sh b dst * block_at src_sh b src).
 
-certicoq_block_header_t *certicoq_block__header_get_ptr(const certicoq_block_t block);
-*)
+Definition certicoq_block__header_get_ptr_spec :=
+  DECLARE _certicoq_block__header_get_ptr
+  WITH
+    b: Block,
+    sh: share,
+    block: val
+  PRE [ tptr int_or_ptr_type ]
+    PROP (isptr block)
+    PARAMS (block)
+    GLOBALS ()
+    SEP (block_at sh b block)
+  POST [ tptr block_header_type ]
+    PROP ()
+    LOCAL (temp ret_temp (offset_val (0 - sizeof block_header_type) block))
+    SEP (block_at sh b block).
 
 Definition certicoq_block__size_get_spec :=
   DECLARE _certicoq_block__size_get
@@ -198,17 +243,38 @@ Definition certicoq_block__odata_set_spec :=
     LOCAL ()
     SEP (block_header_at sh (block_header_odata_set h (proj1_sig z) (proj2_sig z)) p).
 
+Definition certicoq_block__field_get_ptr_spec :=
+  DECLARE _certicoq_block__field_get_ptr
+  WITH
+    b: Block,
+    f: Z,
+    sh: share,
+    block: val,
+    field: val
+  PRE [ tptr int_or_ptr_type, size_type ]
+    PROP (isptr block ; field = field_index_val f)
+    PARAMS (block ; field)
+    GLOBALS ()
+    SEP (block_at sh b block)
+  POST [ tptr int_or_ptr_type ]
+    PROP ()
+    LOCAL (temp ret_temp (offset_val (sizeof int_or_ptr_type * f) block))
+    SEP (block_at sh b block).
+
 
 (*
 TODO:
 
-int_or_ptr *certicoq_block__field_get_ptr(certicoq_block_t block, size_t field);
-int_or_ptr certicoq_block__field_get(const certicoq_block_t block, size_t field);
-void certicoq_block__field_set(certicoq_block_t block, size_t field, int_or_ptr x);
+void certicoq_block__field_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
+void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
+
 *)
 
 Definition ASI: funspecs := ltac:(with_library prog
   [ certicoq_block__init_spec
+  ; certicoq_block__of_header_spec
+  ; certicoq_block__copy_spec
+  ; certicoq_block__header_get_ptr_spec
   ; certicoq_block__size_get_spec
   ; certicoq_block__field_count_get_spec
   ; certicoq_block__field_count_set_spec
@@ -216,4 +282,5 @@ Definition ASI: funspecs := ltac:(with_library prog
   ; certicoq_block__tag_set_spec
   ; certicoq_block__odata_get_spec
   ; certicoq_block__odata_set_spec
+  ; certicoq_block__field_get_ptr_spec
   ]).

@@ -6,7 +6,7 @@
 certicoq_block_t certicoq_block__init(int_or_ptr *dst, const certicoq_block_header_t *header)
 {
   certicoq_block_t ret = dst + 1;
-  dst[0] = header[0];
+  dst[0] = (int_or_ptr)header[0];
   return ret;
 }
 
@@ -23,8 +23,7 @@ certicoq_block_t certicoq_block__copy(int_or_ptr *dst, const certicoq_block_t sr
   size_t i;
   for (i = 0; i < field_count; i++)
   {
-    int_or_ptr f = certicoq_block__field_get(src, i);
-    certicoq_block__field_set(ret, i, f);
+    ret[i] = src[i];
   }
   return ret;
 }
@@ -87,16 +86,6 @@ void certicoq_block__odata_set(certicoq_block_header_t *header, uint8_t odata)
 int_or_ptr *certicoq_block__field_get_ptr(certicoq_block_t block, size_t field)
 {
   return &block[field];
-}
-
-int_or_ptr certicoq_block__field_get(const certicoq_block_t block, size_t field)
-{
-  return block[field];
-}
-
-void certicoq_block__field_set(certicoq_block_t block, size_t field, int_or_ptr x)
-{
-  block[field] = x;
 }
 
 void certicoq_block__field_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args)

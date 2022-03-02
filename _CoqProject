@@ -13,11 +13,15 @@ theories/Block/vst/cmodel/spatial.v
 -Q theories/Block/vst/spec                   CertiCoq.Block.vst.spec
 theories/Block/vst/spec/spec.v
 -Q theories/Block/vst/verif                  CertiCoq.Block.vst.verif
+theories/Block/vst/verif/certicoq_block__copy.v
 theories/Block/vst/verif/certicoq_block__field_count_get.v
 theories/Block/vst/verif/certicoq_block__field_count_set.v
+theories/Block/vst/verif/certicoq_block__field_get_ptr.v
+theories/Block/vst/verif/certicoq_block__header_get_ptr.v
 theories/Block/vst/verif/certicoq_block__init.v
 theories/Block/vst/verif/certicoq_block__odata_get.v
 theories/Block/vst/verif/certicoq_block__odata_set.v
+theories/Block/vst/verif/certicoq_block__of_header.v
 theories/Block/vst/verif/certicoq_block__size_get.v
 theories/Block/vst/verif/certicoq_block__tag_get.v
 theories/Block/vst/verif/certicoq_block__tag_set.v

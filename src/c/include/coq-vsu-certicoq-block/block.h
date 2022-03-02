@@ -85,8 +85,6 @@ uint8_t certicoq_block__odata_get(const certicoq_block_header_t *header);
 void certicoq_block__odata_set(certicoq_block_header_t *header, uint8_t odata);
 
 int_or_ptr *certicoq_block__field_get_ptr(certicoq_block_t block, size_t field);
-int_or_ptr certicoq_block__field_get(const certicoq_block_t block, size_t field);
-void certicoq_block__field_set(certicoq_block_t block, size_t field, int_or_ptr x);
 
 void certicoq_block__field_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
 void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
