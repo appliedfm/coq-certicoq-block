@@ -261,14 +261,47 @@ Definition certicoq_block__field_get_ptr_spec :=
     LOCAL (temp ret_temp (offset_val (sizeof int_or_ptr_type * f) block))
     SEP (block_at sh b block).
 
+Definition iter_fun:
+  type
+ := tptr (Tfunction (Tcons (tptr tvoid) (Tcons (tptr tvoid) (Tcons (tptr int_or_ptr_type) Tnil))) tvoid cc_default).
 
-(*
-TODO:
+Definition certicoq_block__field_iter_spec :=
+  DECLARE _certicoq_block__field_iter
+  WITH
+    b: Block,
+    sh: share,
+    block : val,
+    f: val,
+    c_args: val,
+    f_args: val
+  PRE [ tptr int_or_ptr_type, iter_fun, tptr tvoid, tptr tvoid ]
+    PROP (isptr block)
+    PARAMS (block ; f ; c_args ; f_args)
+    GLOBALS ()
+    SEP (block_at sh b block)
+  POST [ tvoid ]
+    PROP ()
+    LOCAL ()
+    SEP (block_at sh b block).
 
-void certicoq_block__field_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
-void certicoq_block__field_ptr_iter(certicoq_block_t block, void (*f)(const void *, void *, int_or_ptr *), const void *c_args, void *f_args);
-
-*)
+Definition certicoq_block__field_ptr_iter_spec :=
+  DECLARE _certicoq_block__field_ptr_iter
+  WITH
+    b: Block,
+    sh: share,
+    block : val,
+    f: val,
+    c_args: val,
+    f_args: val
+  PRE [ tptr int_or_ptr_type, iter_fun, tptr tvoid, tptr tvoid ]
+    PROP (isptr block)
+    PARAMS (block ; f ; c_args ; f_args)
+    GLOBALS ()
+    SEP (block_at sh b block)
+  POST [ tvoid ]
+    PROP ()
+    LOCAL ()
+    SEP (block_at sh b block).
 
 Definition ASI: funspecs := ltac:(with_library prog
   [ certicoq_block__init_spec
@@ -283,4 +316,6 @@ Definition ASI: funspecs := ltac:(with_library prog
   ; certicoq_block__odata_get_spec
   ; certicoq_block__odata_set_spec
   ; certicoq_block__field_get_ptr_spec
+  ; certicoq_block__field_iter_spec
+  ; certicoq_block__field_ptr_iter_spec
   ]).

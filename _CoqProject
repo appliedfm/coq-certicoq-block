@@ -17,6 +17,8 @@ theories/Block/vst/verif/certicoq_block__copy.v
 theories/Block/vst/verif/certicoq_block__field_count_get.v
 theories/Block/vst/verif/certicoq_block__field_count_set.v
 theories/Block/vst/verif/certicoq_block__field_get_ptr.v
+theories/Block/vst/verif/certicoq_block__field_iter.v
+theories/Block/vst/verif/certicoq_block__field_ptr_iter.v
 theories/Block/vst/verif/certicoq_block__header_get_ptr.v
 theories/Block/vst/verif/certicoq_block__init.v
 theories/Block/vst/verif/certicoq_block__odata_get.v
