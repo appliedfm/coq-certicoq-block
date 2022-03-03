@@ -368,7 +368,7 @@ Definition f_certicoq_block__tag_is_noscan := {|
   fn_callconv := cc_default;
   fn_params := ((_tag, tuchar) :: nil);
   fn_vars := nil;
-  fn_temps := ((_t'2, tint) :: (_t'1, tuchar) :: nil);
+  fn_temps := ((_t'1, tuchar) :: nil);
   fn_body :=
 (Ssequence
   (Ssequence
@@ -377,9 +377,9 @@ Definition f_certicoq_block__tag_is_noscan := {|
                                                 cc_default)) nil)
     (Sifthenelse (Ebinop Oge (Etempvar _tag tuchar) (Etempvar _t'1 tuchar)
                    tint)
-      (Sset _t'2 (Ecast (Econst_int (Int.repr 1) tint) tint))
-      (Sset _t'2 (Ecast (Econst_int (Int.repr 0) tint) tint))))
-  (Sreturn (Some (Etempvar _t'2 tint))))
+      (Sreturn (Some (Econst_int (Int.repr 1) tint)))
+      Sskip))
+  (Sreturn (Some (Econst_int (Int.repr 0) tint))))
 |}.
 
 Definition f_certicoq_block__odata_get := {|
@@ -959,5 +959,5 @@ Definition prog : Clight.program :=
   mkprogram composites global_definitions public_idents _main Logic.I.
 
 
-(*\nInput hashes (sha256):\n\n6ff1203d67446609520e487dc67b5ff8750331e1a6e11e668a5c1aaf6dd095ec  src/c/include/coq-vsu-certicoq-block/src/block.c
+(*\nInput hashes (sha256):\n\nf5dd5c64c1eab3a274a7f7e08f6ac0e407934a20ffa40dfd9de90b2f4248723f  src/c/include/coq-vsu-certicoq-block/src/block.c
 3943d90ec4b7b6c23733ae4c761e96192c4bb51b4e4df59596af1638f5ac49f5  src/c/include/coq-vsu-certicoq-block/block.h\n*)

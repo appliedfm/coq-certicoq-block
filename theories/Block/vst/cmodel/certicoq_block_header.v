@@ -9,6 +9,14 @@ From appliedfm Require Import int_or_ptr.vst.cmodel.val.
 
 Local Open Scope Z.
 
+Definition block_tag_noscan_limit: Z := 251.
+
+Definition block_tag_is_noscan (tag: Z): Prop := tag >= block_tag_noscan_limit.
+
+Definition block_tag_is_noscan_dec (tag: Z):
+  {block_tag_is_noscan tag} + {~ block_tag_is_noscan tag}
+ := Z_ge_dec tag block_tag_noscan_limit.
+
 Record BlockHeader :=
 {
   block_header_field_count: Z;

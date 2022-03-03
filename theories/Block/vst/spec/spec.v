@@ -303,6 +303,36 @@ Definition certicoq_block__field_ptr_iter_spec :=
     LOCAL ()
     SEP (block_at sh b block).
 
+Definition certicoq_block__tag_noscan_limit_spec :=
+  DECLARE _certicoq_block__tag_noscan_limit
+  WITH
+    u: unit
+  PRE [ ]
+    PROP ()
+    PARAMS ()
+    GLOBALS ()
+    SEP ()
+  POST [ tuchar ]
+    PROP ()
+    LOCAL (temp ret_temp (Vint (Int.repr block_tag_noscan_limit)))
+    SEP ().
+
+Definition certicoq_block__tag_is_noscan_spec :=
+  DECLARE _certicoq_block__tag_is_noscan
+  WITH
+    t: Z,
+    tag: val
+  PRE [ tuchar ]
+    PROP (tag = Vint (Int.repr t))
+    PARAMS (tag)
+    GLOBALS ()
+    SEP ()
+  POST [ tint ]
+    PROP ()
+    LOCAL (temp ret_temp (Vint (Int.repr (if block_tag_is_noscan_dec t then 1 else 0))))
+    SEP ().
+
+
 Definition ASI: funspecs := ltac:(with_library prog
   [ certicoq_block__init_spec
   ; certicoq_block__of_header_spec
@@ -313,6 +343,8 @@ Definition ASI: funspecs := ltac:(with_library prog
   ; certicoq_block__field_count_set_spec
   ; certicoq_block__tag_get_spec
   ; certicoq_block__tag_set_spec
+  ; certicoq_block__tag_noscan_limit_spec
+  ; certicoq_block__tag_is_noscan_spec
   ; certicoq_block__odata_get_spec
   ; certicoq_block__odata_set_spec
   ; certicoq_block__field_get_ptr_spec

@@ -69,7 +69,11 @@ certicoq_block_tag_t certicoq_block__tag_noscan_limit()
 
 int certicoq_block__tag_is_noscan(certicoq_block_tag_t tag)
 {
-  return tag >= certicoq_block__tag_noscan_limit() ? 1 : 0;
+  if (tag >= certicoq_block__tag_noscan_limit())
+  {
+    return 1;
+  }
+  return 0;
 }
 
 uint8_t certicoq_block__odata_get(const certicoq_block_header_t *header)

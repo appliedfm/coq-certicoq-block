@@ -26,4 +26,6 @@ theories/Block/vst/verif/certicoq_block__odata_set.v
 theories/Block/vst/verif/certicoq_block__of_header.v
 theories/Block/vst/verif/certicoq_block__size_get.v
 theories/Block/vst/verif/certicoq_block__tag_get.v
+theories/Block/vst/verif/certicoq_block__tag_is_noscan.v
+theories/Block/vst/verif/certicoq_block__tag_noscan_limit.v
 theories/Block/vst/verif/certicoq_block__tag_set.v
