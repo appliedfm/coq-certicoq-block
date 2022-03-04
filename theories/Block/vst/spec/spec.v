@@ -3,6 +3,7 @@ From Coq Require Import Lists.List.
 From VST Require Import floyd.proofauto.
 
 From appliedfm Require Import int_or_ptr.vst.cmodel.val.
+From appliedfm Require Import int_or_ptr.vst.spec.spec.
 
 From CertiCoq Require Import Block.vst.ast.ast.
 From CertiCoq Require Import Block.vst.cmodel.certicoq_block_header.
@@ -332,22 +333,27 @@ Definition certicoq_block__tag_is_noscan_spec :=
     LOCAL (temp ret_temp (Vint (Int.repr (if block_tag_is_noscan_dec t then 1 else 0))))
     SEP ().
 
-
-Definition ASI: funspecs := ltac:(with_library prog
-  [ certicoq_block__init_spec
-  ; certicoq_block__of_header_spec
-  ; certicoq_block__copy_spec
-  ; certicoq_block__header_get_ptr_spec
-  ; certicoq_block__size_get_spec
-  ; certicoq_block__field_count_get_spec
-  ; certicoq_block__field_count_set_spec
-  ; certicoq_block__tag_get_spec
-  ; certicoq_block__tag_set_spec
-  ; certicoq_block__tag_noscan_limit_spec
-  ; certicoq_block__tag_is_noscan_spec
-  ; certicoq_block__odata_get_spec
-  ; certicoq_block__odata_set_spec
-  ; certicoq_block__field_get_ptr_spec
-  ; certicoq_block__field_iter_spec
-  ; certicoq_block__field_ptr_iter_spec
-  ]).
+Module certicoq_block__specs.
+  Definition externs: funspecs := [int_or_ptr__is_int_spec].
+  Definition imports: funspecs := [].
+  Definition internals: funspecs := [].
+  Definition exports: funspecs :=
+    [ certicoq_block__init_spec
+    ; certicoq_block__of_header_spec
+    ; certicoq_block__copy_spec
+    ; certicoq_block__header_get_ptr_spec
+    ; certicoq_block__size_get_spec
+    ; certicoq_block__field_count_get_spec
+    ; certicoq_block__field_count_set_spec
+    ; certicoq_block__tag_get_spec
+    ; certicoq_block__tag_set_spec
+    ; certicoq_block__tag_noscan_limit_spec
+    ; certicoq_block__tag_is_noscan_spec
+    ; certicoq_block__odata_get_spec
+    ; certicoq_block__odata_set_spec
+    ; certicoq_block__field_get_ptr_spec
+    ; certicoq_block__field_iter_spec
+    ; certicoq_block__field_ptr_iter_spec
+    ].
+  Definition all: funspecs := imports ++ internals ++ exports.
+End certicoq_block__specs.

@@ -29,3 +29,4 @@ theories/Block/vst/verif/certicoq_block__tag_get.v
 theories/Block/vst/verif/certicoq_block__tag_is_noscan.v
 theories/Block/vst/verif/certicoq_block__tag_noscan_limit.v
 theories/Block/vst/verif/certicoq_block__tag_set.v
+theories/Block/vst/verif/vsu.v
