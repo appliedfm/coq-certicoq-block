@@ -334,9 +334,6 @@ Definition certicoq_block__tag_is_noscan_spec :=
     SEP ().
 
 Module certicoq_block__specs.
-  Definition externs: funspecs := [int_or_ptr__is_int_spec].
-  Definition imports: funspecs := [].
-  Definition internals: funspecs := [].
   Definition exports: funspecs :=
     [ certicoq_block__init_spec
     ; certicoq_block__of_header_spec
@@ -355,5 +352,10 @@ Module certicoq_block__specs.
     ; certicoq_block__field_iter_spec
     ; certicoq_block__field_ptr_iter_spec
     ].
-  Definition all: funspecs := externs ++ imports ++ internals ++ exports.
+  Definition externs: funspecs := [].
+  Definition imports: funspecs := [int_or_ptr__is_int_spec].
+  Definition private: funspecs := [].
+  Definition internals: funspecs := private ++ exports.
+  Definition gprog: funspecs := imports ++ internals.
+  Definition vprog: varspecs := ltac:(mk_varspecs prog).
 End certicoq_block__specs.

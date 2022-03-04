@@ -22,10 +22,15 @@ From CertiCoq Require Import Block.vst.verif.certicoq_block__tag_set.
 
 #[local] Existing Instance NullExtension.Espec.
 
-Lemma certicoq_block__vsu: VSU certicoq_block__specs.externs certicoq_block__specs.imports ltac:(QPprog prog) certicoq_block__specs.exports emp.
+Lemma certicoq_block__vsu:
+  VSU
+    certicoq_block__specs.externs
+    certicoq_block__specs.imports
+    ltac:(QPprog prog)
+    certicoq_block__specs.exports
+    emp.
 Proof.
-  mkVSU prog certicoq_block__specs.all.
-  - admit.
+  mkVSU prog certicoq_block__specs.internals.
   - solve_SF_internal certicoq_block__init.body.
   - solve_SF_internal certicoq_block__of_header.body.
   - solve_SF_internal certicoq_block__copy.body.
@@ -42,4 +47,4 @@ Proof.
   - solve_SF_internal certicoq_block__field_get_ptr.body.
   - solve_SF_internal certicoq_block__field_iter.body.
   - solve_SF_internal certicoq_block__field_ptr_iter.body.
-Admitted.
+Qed.
