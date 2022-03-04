@@ -355,5 +355,5 @@ Module certicoq_block__specs.
     ; certicoq_block__field_iter_spec
     ; certicoq_block__field_ptr_iter_spec
     ].
-  Definition all: funspecs := imports ++ internals ++ exports.
+  Definition all: funspecs := externs ++ imports ++ internals ++ exports.
 End certicoq_block__specs.

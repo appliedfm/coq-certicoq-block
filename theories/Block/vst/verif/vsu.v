@@ -25,4 +25,21 @@ From CertiCoq Require Import Block.vst.verif.certicoq_block__tag_set.
 Lemma certicoq_block__vsu: VSU certicoq_block__specs.externs certicoq_block__specs.imports ltac:(QPprog prog) certicoq_block__specs.exports emp.
 Proof.
   mkVSU prog certicoq_block__specs.all.
+  - admit.
+  - solve_SF_internal certicoq_block__init.body.
+  - solve_SF_internal certicoq_block__of_header.body.
+  - solve_SF_internal certicoq_block__copy.body.
+  - solve_SF_internal certicoq_block__header_get_ptr.body.
+  - solve_SF_internal certicoq_block__size_get.body.
+  - solve_SF_internal certicoq_block__field_count_get.body.
+  - solve_SF_internal certicoq_block__field_count_set.body.
+  - solve_SF_internal certicoq_block__tag_get.body.
+  - solve_SF_internal certicoq_block__tag_set.body.
+  - solve_SF_internal certicoq_block__tag_noscan_limit.body.
+  - solve_SF_internal certicoq_block__tag_is_noscan.body.
+  - solve_SF_internal certicoq_block__odata_get.body.
+  - solve_SF_internal certicoq_block__odata_set.body.
+  - solve_SF_internal certicoq_block__field_get_ptr.body.
+  - solve_SF_internal certicoq_block__field_iter.body.
+  - solve_SF_internal certicoq_block__field_ptr_iter.body.
 Admitted.
