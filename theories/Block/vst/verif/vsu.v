@@ -22,7 +22,7 @@ From CertiCoq Require Import Block.vst.verif.certicoq_block__tag_set.
 
 #[local] Existing Instance NullExtension.Espec.
 
-Lemma certicoq_block__vsu:
+Definition certicoq_block__vsu:
   VSU
     certicoq_block__specs.externs
     certicoq_block__specs.imports
@@ -47,4 +47,6 @@ Proof.
   - solve_SF_internal certicoq_block__field_get_ptr.body.
   - solve_SF_internal certicoq_block__field_iter.body.
   - solve_SF_internal certicoq_block__field_ptr_iter.body.
-Qed.
+Defined.
+
+(* Eval cbv in map (fun x => string_of_ident (fst x)) (VSU_Exports certicoq_block__vsu). *)
